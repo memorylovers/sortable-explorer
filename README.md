@@ -23,10 +23,11 @@ Sortable Explorer is a file explorer that allows multiple display modes and sort
 - **Two display modes**: "Tree" including folders and "Flat" showing only files
 - **Multiple sorting options**: Ascending/descending sort by "File name", "Creation date", and "Modification date"
 - **Target file specification**: You can set paths to include and exclude
-- **Create a new date-prefixed file**: Enter a "Title" to create `YYYYMMDD_<title>.md`
+- **Create a new date-prefixed file**: Enter a "Title" to create `YYYYMMDD_<title>.md`. If a file with the same name already exists, a sequential number will be added, like `YYYYMMDD_<title>_1.md`
 
 Additionally, the following options are available from the context menu (right-click):
 
+- **Create a new note**: You can create a new note in the selected folder
 - **Delete files**: You can delete files directly from Sortable Explorer
 - **Add to exclude patterns**: You can add folders or files to the exclude patterns directly from Sortable Explorer
 

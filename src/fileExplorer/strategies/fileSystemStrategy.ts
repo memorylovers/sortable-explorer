@@ -22,7 +22,7 @@ export interface FileSystemStrategy {
   /**
    * 新しいノートファイルを作成する
    */
-  createNewNote(workspacePath: string, title: string): Promise<string>;
+  createNewNote(targetDirectory: string, title: string): Promise<string>;
   
   /**
    * 指定されたパスが除外パターンに一致するかチェック
