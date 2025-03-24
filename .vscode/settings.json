@@ -36,5 +36,12 @@
     "!**/vendor",
     "!**/memory-bank/**/*",
     "!**/.cline-plans",
+  ],
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 1,
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "Use conventional commit message format."
+    }
   ]
 }
