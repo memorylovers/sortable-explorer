@@ -1,0 +1,22 @@
+{
+  "types": {
+    "feat": { "title": "🚀 Features" },
+    "fix": { "title": "🐛 Fixes" },
+    "docs": { "title": "📝 Documentation" },
+    "test": { "title": "🧪 Tests" },
+    "chore": { "title": "🔧 Maintenance" },
+    "refactor": { "title": "♻️ Refactor" },
+    "perf": { "title": "⚡ Performance" },
+    "style": { "title": "💄 Style" },
+    "build": { "title": "📦 Build" },
+    "ci": { "title": "👷 CI" },
+    "revert": { "title": "⏪ Revert" }
+  },
+  "output": {
+    "dir": "./",
+    "formats": ["markdown"]
+  },
+  "titles": {
+    "unreleased": "Unreleased"
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "name": "sortable-explorer",
+  "displayName": "%displayName%",
+  "description": "%description%",
+  "version": "0.1.0",
+  "preview": true,
+  "publisher": "memorylovers",
+  "icon": "resources/icon.png",
+  "categories": [
+    "Other"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/memorylovers/sortable-explorer"
+  },
+  "funding": "https://github.com/sponsors/memory-lovers",
+  "sponsor": {
+    "url": "https://github.com/sponsors/memory-lovers"
+  },
+  "activationEvents": [
+    "onView:sortable-explorer"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "%configuration.title%",
+      "properties": {
+        "sortable-explorer.viewMode": {
+          "order": 0,
+          "type": "string",
+          "enum": [
+            "flat",
+            "tree"
+          ],
+          "default": "tree",
+          "description": "%configuration.viewMode.description%"
+        },
+        "sortable-explorer.sortBy": {
+          "order": 1,
+          "type": "string",
+          "enum": [
+            "name",
+            "created",
+            "modified"
+          ],
+          "default": "modified",
+          "description": "%configuration.sortBy.description%"
+        },
+        "sortable-explorer.sortDirection": {
+          "order": 2,
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "desc",
+          "description": "%configuration.sortDirection.description%"
+        },
+        "sortable-explorer.includePatterns": {
+          "order": 3,
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "**/*.md",
+            "**/*.txt"
+          ],
+          "description": "%configuration.includePatterns.description%"
+        },
+        "sortable-explorer.excludePatterns": {
+          "order": 4,
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "**/node_modules/**"
+          ],
+          "description": "%configuration.excludePatterns.description%"
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "sortable-explorer",
+          "title": "%displayName%",
+          "icon": "$(notebook)"
+        }
+      ]
+    },
+    "views": {
+      "sortable-explorer": [
+        {
+          "id": "sortable-explorer.fileExplorer",
+          "name": "%view.notepadFiles.name%",
+          "icon": "$(notebook)"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "sortable-explorer.refreshFileExplorer",
+        "title": "%command.refresh.title%",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "sortable-explorer.openSettings",
+        "title": "%command.openSettings.title%",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "sortable-explorer.createNewNote",
+        "title": "%command.createNewNote.title%",
+        "icon": "$(new-file)"
+      },
+      {
+        "command": "sortable-explorer.selectSortBy",
+        "title": "%command.selectSortBy.title%",
+        "icon": "$(sort-precedence)"
+      },
+      {
+        "command": "sortable-explorer.toggleSortDirection.asc",
+        "title": "%command.toggleSortDirection.title%",
+        "icon": "$(arrow-up)"
+      },
+      {
+        "command": "sortable-explorer.toggleSortDirection.desc",
+        "title": "%command.toggleSortDirection.title%",
+        "icon": "$(arrow-down)"
+      },
+      {
+        "command": "sortable-explorer.toggleViewMode.flat",
+        "title": "%command.toggleViewMode.title%",
+        "icon": "$(list-flat)"
+      },
+      {
+        "command": "sortable-explorer.toggleViewMode.tree",
+        "title": "%command.toggleViewMode.title%",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "sortable-explorer.deleteFile",
+        "title": "%command.deleteFile.title%",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "sortable-explorer.addToExcludePatterns",
+        "title": "%command.addToExcludePatterns.title%",
+        "icon": "$(eye-closed)"
+      }
+    ],
+    "keybindings": [],
+    "menus": {
+      "view/title": [
+        {
+          "command": "sortable-explorer.createNewNote",
+          "when": "view == sortable-explorer.fileExplorer",
+          "group": "navigation@000"
+        },
+        {
+          "command": "sortable-explorer.selectSortBy",
+          "when": "view == sortable-explorer.fileExplorer",
+          "group": "navigation@100"
+        },
+        {
+          "command": "sortable-explorer.toggleSortDirection.desc",
+          "when": "view == sortable-explorer.fileExplorer && (sortable-explorer.sortDirectionIcon == 'desc' || !sortable-explorer.sortDirectionIcon)",
+          "group": "navigation@200"
+        },
+        {
+          "command": "sortable-explorer.toggleSortDirection.asc",
+          "when": "view == sortable-explorer.fileExplorer && sortable-explorer.sortDirectionIcon == 'asc'",
+          "group": "navigation@200"
+        },
+        {
+          "command": "sortable-explorer.toggleViewMode.tree",
+          "when": "view == sortable-explorer.fileExplorer && (sortable-explorer.viewModeIcon == 'tree' || !sortable-explorer.viewModeIcon)",
+          "group": "navigation@300"
+        },
+        {
+          "command": "sortable-explorer.toggleViewMode.flat",
+          "when": "view == sortable-explorer.fileExplorer && sortable-explorer.viewModeIcon == 'flat'",
+          "group": "navigation@300"
+        },
+        {
+          "command": "sortable-explorer.openSettings",
+          "when": "view == sortable-explorer.fileExplorer",
+          "group": "navigation@400"
+        },
+        {
+          "command": "sortable-explorer.refreshFileExplorer",
+          "when": "view == sortable-explorer.fileExplorer",
+          "group": "navigation@500"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "sortable-explorer.deleteFile",
+          "when": "view == sortable-explorer.fileExplorer",
+          "group": "9_cutcopypaste"
+        },
+        {
+          "command": "sortable-explorer.addToExcludePatterns",
+          "when": "view == sortable-explorer.fileExplorer",
+          "group": "7_modification"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "sortable-explorer.createNewNote",
+          "when": "view == sortable-explorer.fileExplorer"
+        },
+        {
+          "command": "sortable-explorer.refreshFileExplorer",
+          "when": "view == sortable-explorer.fileExplorer"
+        },
+        {
+          "command": "sortable-explorer.openSettings",
+          "when": "view == sortable-explorer.fileExplorer"
+        },
+        {
+          "command": "sortable-explorer.selectSortBy",
+          "when": "view == sortable-explorer.fileExplorer"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run package",
+    "compile": "pnpm run check-types && pnpm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "pnpm run check-types && pnpm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "changelog": "changelogen --output",
+    "changelog:generate": "changelogen --output",
+    "changelog:check": "changelogen --check",
+    "release": "changelogen --release --push && pnpm publish"
+  },
+  "devDependencies": {
+    "@types/micromatch": "^4.0.9",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.98.0",
+    "@typescript-eslint/eslint-plugin": "^8.25.0",
+    "@typescript-eslint/parser": "^8.25.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "@vscode/vsce": "^3.3.0",
+    "changelogen": "^0.6.1",
+    "esbuild": "^0.25.0",
+    "eslint": "^9.21.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.3",
+    "micromatch": "^4.0.8"
+  },
+  "vsce": {
+    "dependencies": false,
+    "yarn": false
+  },
+  "main": "./dist/extension.js",
+  "engines": {
+    "vscode": "^1.98.0",
+    "node": ">=23.5.0",
+    "pnpm": ">=9.15.2"
+  },
+  "packageManager": "pnpm@9.15.2"
+}

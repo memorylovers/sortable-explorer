@@ -1,0 +1,21 @@
+// Sortable Explorer デフォルト設定
+{
+  // Sortable Explorer設定
+  "sortable-explorer.viewMode": "tree",
+  "sortable-explorer.sortBy": "name",
+  "sortable-explorer.sortDirection": "desc",
+  "sortable-explorer.includePatterns": [
+    "**/*.md",
+    "**/*.txt"
+  ],
+  "sortable-explorer.excludePatterns": [
+    "**/node_modules/**"
+  ],
+  // VSCode一般設定
+  "files.exclude": {
+    "**/node_modules": true
+  },
+  "search.exclude": {
+    "**/node_modules": true
+  }
+}

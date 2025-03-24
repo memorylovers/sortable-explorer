@@ -1,0 +1,109 @@
+{
+  "project": "Sortable Explorer",
+  "version": "0.0.1",
+  "lastUpdated": "2025-03-15T10:30:00Z",
+  "features": [
+    {
+      "id": "feature-001",
+      "name": "ファイル表示モード切り替え",
+      "status": "completed",
+      "priority": "high",
+      "description": "ファイルをフラット表示またはツリー表示で閲覧可能にする機能"
+    },
+    {
+      "id": "feature-002",
+      "name": "ソート方法選択",
+      "status": "completed",
+      "priority": "high",
+      "description": "ファイル名、作成日時、更新日時でのソートを可能にする機能"
+    },
+    {
+      "id": "feature-003",
+      "name": "ソート方向切り替え",
+      "status": "completed",
+      "priority": "medium",
+      "description": "昇順または降順でのソートを可能にする機能"
+    },
+    {
+      "id": "feature-004",
+      "name": "ファイルフィルタリング",
+      "status": "completed",
+      "priority": "medium",
+      "description": "特定のパターンに一致するファイルの包含/除外を可能にする機能"
+    },
+    {
+      "id": "feature-005",
+      "name": "新規ノート作成",
+      "status": "completed",
+      "priority": "high",
+      "description": "エクスプローラーから直接新しいノートファイルを作成可能にする機能"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-001",
+      "featureId": "feature-001",
+      "name": "ツリー表示の実装",
+      "assignee": "suzuki",
+      "status": "completed",
+      "estimatedHours": 8,
+      "actualHours": 10
+    },
+    {
+      "id": "task-002",
+      "featureId": "feature-001",
+      "name": "フラット表示の実装",
+      "assignee": "suzuki",
+      "status": "completed",
+      "estimatedHours": 6,
+      "actualHours": 5
+    },
+    {
+      "id": "task-003",
+      "featureId": "feature-002",
+      "name": "ソート戦略の実装",
+      "assignee": "yamada",
+      "status": "completed",
+      "estimatedHours": 4,
+      "actualHours": 4
+    },
+    {
+      "id": "task-004",
+      "featureId": "feature-003",
+      "name": "ソート方向切り替えUIの実装",
+      "assignee": "sato",
+      "status": "completed",
+      "estimatedHours": 3,
+      "actualHours": 2
+    },
+    {
+      "id": "task-005",
+      "featureId": "feature-004",
+      "name": "パターンマッチングの実装",
+      "assignee": "yamada",
+      "status": "completed",
+      "estimatedHours": 5,
+      "actualHours": 7
+    }
+  ],
+  "team": [
+    {
+      "id": "yamada",
+      "name": "山田太郎",
+      "role": "プロジェクトマネージャー",
+      "email": "yamada@example.com"
+    },
+    {
+      "id": "suzuki",
+      "name": "鈴木花子",
+      "role": "シニア開発者",
+      "email": "suzuki@example.com"
+    },
+    {
+      "id": "sato",
+      "name": "佐藤次郎",
+      "role": "開発者",
+      "email": "sato@example.com"
+    }
+  ]
+}
