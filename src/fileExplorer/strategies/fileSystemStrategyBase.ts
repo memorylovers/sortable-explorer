@@ -110,7 +110,7 @@ export abstract class FileSystemStrategyBase implements FileSystemStrategy {
    * 新しいノートファイルを作成する（共通実装）
    */
   public async createNewNote(
-    workspacePath: string,
+    targetDirectory: string,
     title: string
   ): Promise<string> {
     // 現在の日時を取得してファイル名の一部として使用
@@ -122,7 +122,7 @@ export abstract class FileSystemStrategyBase implements FileSystemStrategy {
 
     // ファイル名を生成
     const fileName = `${dateStr}_${title}.md`;
-    const filePath = path.join(workspacePath, fileName);
+    const filePath = path.join(targetDirectory, fileName);
 
     // ファイルの内容を作成
     const content = `# ${title}`;

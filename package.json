@@ -197,6 +197,11 @@
       ],
       "view/item/context": [
         {
+          "command": "sortable-explorer.createNewNote",
+          "when": "view == sortable-explorer.fileExplorer",
+          "group": "1_creation"
+        },
+        {
           "command": "sortable-explorer.deleteFile",
           "when": "view == sortable-explorer.fileExplorer",
           "group": "9_cutcopypaste"

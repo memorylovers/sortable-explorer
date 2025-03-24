@@ -53,12 +53,12 @@ export class FileSystemHelper {
   /**
    * 新しいノートファイルを作成する
    *
-   * @param workspacePath 作成先のワークスペースパス
+   * @param targetDirectory 作成先のディレクトリパス
    * @param title ノートのタイトル
    * @returns 作成されたファイルのパス
    */
-  public async createNewNote(workspacePath: string, title: string): Promise<string> {
-    return this.currentStrategy.createNewNote(workspacePath, title);
+  public async createNewNote(targetDirectory: string, title: string): Promise<string> {
+    return this.currentStrategy.createNewNote(targetDirectory, title);
   }
   
   /**
