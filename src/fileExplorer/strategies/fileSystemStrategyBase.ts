@@ -108,6 +108,7 @@ export abstract class FileSystemStrategyBase implements FileSystemStrategy {
 
   /**
    * 新しいノートファイルを作成する（共通実装）
+   * 同名のファイルが存在する場合は連番を付けて新しいファイルを作成する
    */
   public async createNewNote(
     targetDirectory: string,
@@ -120,9 +121,26 @@ export abstract class FileSystemStrategyBase implements FileSystemStrategy {
       (now.getMonth() + 1).toString().padStart(2, "0") +
       now.getDate().toString().padStart(2, "0");
 
-    // ファイル名を生成
-    const fileName = `${dateStr}_${title}.md`;
-    const filePath = path.join(targetDirectory, fileName);
+    // ベースとなるファイル名を生成
+    const baseFileName = `${dateStr}_${title}`;
+    let fileName = `${baseFileName}.md`;
+    let filePath = path.join(targetDirectory, fileName);
+    
+    // ファイルが存在するかチェックし、存在する場合は連番を付ける
+    let counter = 1;
+    while (true) {
+      try {
+        // ファイルが存在するかチェック
+        await fs.promises.access(filePath, fs.constants.F_OK);
+        // ファイルが存在する場合、連番を付けたファイル名を生成
+        fileName = `${baseFileName}_${counter}.md`;
+        filePath = path.join(targetDirectory, fileName);
+        counter++;
+      } catch (error) {
+        // ファイルが存在しない場合、ループを抜ける
+        break;
+      }
+    }
 
     // ファイルの内容を作成
     const content = `# ${title}`;
