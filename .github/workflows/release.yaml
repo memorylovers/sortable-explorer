@@ -1,15 +1,26 @@
 name: VSCode Extension Release
 
 on:
-  push:
-    tags:
-      - "v*" # タグがプッシュされたときに実行 (v1.0.0, v1.2.3 など)
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: "Release type"
+        required: true
+        default: "patch"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 # ジョブに必要な権限を設定
 permissions:
   contents: write # リポジトリコンテンツの読み書き権限（コミット、タグ、リリース作成に必要）
   issues: write # 必要に応じてイシューにコメントする場合
   pull-requests: write # 必要に応じてPRにコメントする場合
+
+env:
+  STORE_PATH:
 
 jobs:
   publish:
@@ -47,45 +58,33 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Generate CHANGELOG
-        id: changelog
+      - name: Setup GitHub Config
         run: |
-          # タグからバージョンを抽出（v1.0.0 -> 1.0.0）
-          VERSION=${GITHUB_REF_NAME#v}
-          
-          # CHANGELOGを生成
-          pnpm changelogen --release $VERSION --no-tag --no-commit
-          
-          # CHANGELOGの内容を変数に保存
-          CHANGELOG_CONTENT=$(cat CHANGELOG.md)
-          echo "CHANGELOG_CONTENT<<EOF" >> $GITHUB_ENV
-          echo "$CHANGELOG_CONTENT" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-          
-          # コミット
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add CHANGELOG.md
-          git commit -m "chore: update CHANGELOG.md for $GITHUB_REF_NAME" || echo "No changes to commit"
 
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref_name }}
+      - name: Bump Version and Generate CHANGELOG
+        run: |
+          pnpm changelogen --release --${{ github.event.inputs.release_type }} --noAuthors --no-github
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Package Extension
-        run: pnpm vscode:package
-        # または: pnpm exec vsce package
-
-      - name: Publish to Visual Studio Marketplace
+      - name: Build & Publish to Visual Studio Marketplace
         run: pnpm exec vsce publish -p ${{ secrets.VSCE_PAT }}
 
       # CHANGELOGの内容を含めたGitHubリリースを作成
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: "*.vsix"
-          body: ${{ env.CHANGELOG_CONTENT }}
+        run: |
+          # push commit and tag
+          git push --all
+
+          # get version
+          VERSION=`jq -r ".version" ./package.json`
+
+          # create github release
+          pnpm changelogen gh release "v${VERSION}"
+
+          # attach .vsix file
+          gh release upload "v${VERSION}" *.vsix
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
