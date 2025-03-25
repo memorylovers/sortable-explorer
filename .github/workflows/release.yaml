@@ -70,7 +70,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build & Publish to Visual Studio Marketplace
-        run: pnpm exec vsce publish -p ${{ secrets.VSCE_PAT }}
+        run: pnpm vsce publish -p ${{ secrets.VSCE_PAT }}
 
       # CHANGELOGの内容を含めたGitHubリリースを作成
       - name: Create GitHub Release
