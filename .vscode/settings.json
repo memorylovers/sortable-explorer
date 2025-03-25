@@ -41,7 +41,7 @@
   "workbench.editor.limit.value": 1,
   "github.copilot.chat.commitMessageGeneration.instructions": [
     {
-      "text": "Use conventional commit message format."
+      "text": "Use conventional commit message format and English."
     }
   ]
 }
