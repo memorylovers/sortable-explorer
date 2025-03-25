@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import { addToExcludePatternsCommand } from "./commands/addToExcludePatternsCommand";
+import { copyFileCommand } from "./commands/copyFileCommand";
 import { createNewNoteCommand } from "./commands/createNewNoteCommand";
 import { deleteFileCommand } from "./commands/deleteFileCommand";
 import { openSettingsCommand } from "./commands/openSettingsCommand";
@@ -120,6 +121,14 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       COMMANDS.DELETE_FILE,
       deleteFileCommand(fileExplorerProvider)
+    )
+  );
+
+  // ファイルコピーコマンドの登録
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      COMMANDS.COPY_FILE,
+      copyFileCommand(fileExplorerProvider)
     )
   );
 

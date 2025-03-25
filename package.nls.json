@@ -15,6 +15,7 @@
   "command.toggleSortDirection.title": "Toggle Sort Direction (Ascending/Descending)",
   "command.toggleViewMode.title": "Toggle View Mode (Flat/Tree)",
   "command.deleteFile.title": "Delete File",
+  "command.copyFile.title": "Copy File",
   "command.addToExcludePatterns.title": "Exclude from Display",
   "sortBy.name": "Name",
   "sortBy.created": "Date Created",
@@ -43,6 +44,9 @@
   "addToExcludePatterns.added": "Added to exclude patterns: {0}",
   "addToExcludePatterns.error": "Failed to add to exclude patterns",
   "addToExcludePatterns.alreadyExists": "Pattern \"{0}\" already exists in the exclusion list.",
+  "copyFile.copied": "File copied: {0} to {1}",
+  "copyFile.error": "Failed to copy file",
+  "copyFile.noSelection": "No file selected for copying.",
   "yes": "Yes",
   "no": "No",
   "cancel": "Cancel"
