@@ -16,6 +16,7 @@ export const COMMANDS = {
   COPY_FILE: `${EXTENSION_NAME}.copyFile`,
   SELECT_SORT_BY: `${EXTENSION_NAME}.selectSortBy`,
   ADD_TO_EXCLUDE_PATTERNS: `${EXTENSION_NAME}.addToExcludePatterns`,
+  RENAME_FILE: `${EXTENSION_NAME}.renameFile`,
 } as const;
 
 // 設定のプロパティ名（プレフィックスなし）
