@@ -149,6 +149,11 @@
         "command": "sortable-explorer.addToExcludePatterns",
         "title": "%command.addToExcludePatterns.title%",
         "icon": "$(eye-closed)"
+      },
+      {
+        "command": "sortable-explorer.copyFile",
+        "title": "%command.copyFile.title%",
+        "icon": "$(files)"
       }
     ],
     "keybindings": [],
@@ -202,9 +207,14 @@
           "group": "1_creation"
         },
         {
+          "command": "sortable-explorer.copyFile",
+          "when": "view == sortable-explorer.fileExplorer && !viewItem.isDirectory",
+          "group": "9_cutcopypaste@1"
+        },
+        {
           "command": "sortable-explorer.deleteFile",
           "when": "view == sortable-explorer.fileExplorer",
-          "group": "9_cutcopypaste"
+          "group": "9_cutcopypaste@2"
         },
         {
           "command": "sortable-explorer.addToExcludePatterns",

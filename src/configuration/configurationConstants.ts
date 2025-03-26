@@ -13,6 +13,7 @@ export const COMMANDS = {
   TOGGLE_SORT_DIRECTION: `${EXTENSION_NAME}.toggleSortDirection`,
   OPEN_SETTINGS: `${EXTENSION_NAME}.openSettings`,
   DELETE_FILE: `${EXTENSION_NAME}.deleteFile`,
+  COPY_FILE: `${EXTENSION_NAME}.copyFile`,
   SELECT_SORT_BY: `${EXTENSION_NAME}.selectSortBy`,
   ADD_TO_EXCLUDE_PATTERNS: `${EXTENSION_NAME}.addToExcludePatterns`,
 } as const;

@@ -5,8 +5,6 @@ on:
     inputs:
       release_type:
         description: "Release type"
-        required: true
-        default: "patch"
         type: choice
         options:
           - patch
@@ -65,7 +63,11 @@ jobs:
 
       - name: Bump Version and Generate CHANGELOG
         run: |
-          pnpm changelogen --release --${{ github.event.inputs.release_type }} --noAuthors --no-github
+          if [ -z "${{ github.event.inputs.release_type }}" ]; then
+            pnpm changelogen --release --noAuthors --no-github
+          else
+            pnpm changelogen --release --${{ github.event.inputs.release_type }} --noAuthors --no-github
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

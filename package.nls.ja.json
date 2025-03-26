@@ -15,6 +15,7 @@
   "command.toggleSortDirection.title": "並び順の方向を切り替え（昇順/降順）",
   "command.toggleViewMode.title": "表示モード切替（フラット/ツリー）",
   "command.deleteFile.title": "ファイル削除",
+  "command.copyFile.title": "ファイルをコピー",
   "command.addToExcludePatterns.title": "表示から除外",
   "sortBy.name": "名前順",
   "sortBy.created": "作成日時順",
@@ -43,6 +44,9 @@
   "addToExcludePatterns.added": "除外パターンに追加しました: {0}",
   "addToExcludePatterns.error": "除外パターンへの追加に失敗しました",
   "addToExcludePatterns.alreadyExists": "パターン \"{0}\" は既に除外リストに存在します。",
+  "copyFile.copied": "ファイルをコピーしました: {0} から {1}",
+  "copyFile.error": "ファイルのコピーに失敗しました",
+  "copyFile.noSelection": "コピーするファイルが選択されていません。",
   "yes": "はい",
   "no": "いいえ",
   "cancel": "キャンセル"
