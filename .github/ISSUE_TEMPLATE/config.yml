@@ -1,7 +1,7 @@
 # GitHub Issue Template Configuration
 # See: https://docs.github.com/ja/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository
 
-blank_issues_enabled: false
+blank_issues_enabled: true
 contact_links:
   - name: ドキュメント
     url: https://github.com/memorylovers/sortable-explorer/blob/main/README.md

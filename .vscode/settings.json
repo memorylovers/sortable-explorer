@@ -44,5 +44,8 @@
     {
       "text": "Use conventional commit message format and English."
     }
-  ]
+  ],
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-issue-config.json": "file:///Users/fujiuray/workspace_memoryloves/workspace_oss/vscode-ex-sortable-explorer/.github/ISSUE_TEMPLATE/config.yml"
+  }
 }
