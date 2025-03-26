@@ -26,6 +26,7 @@
   ],
   "markdownlint.config": {
     "MD040": false,
+    "MD041": false,
   },
   "markdownlint.lintWorkspaceGlobs": [
     "**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,workbook}",
@@ -38,7 +39,7 @@
     "!**/.cline-plans",
   ],
   "workbench.editor.limit.enabled": true,
-  "workbench.editor.limit.value": 1,
+  "workbench.editor.limit.value": 10,
   "github.copilot.chat.commitMessageGeneration.instructions": [
     {
       "text": "Use conventional commit message format and English."
