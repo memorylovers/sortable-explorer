@@ -154,6 +154,11 @@
         "command": "sortable-explorer.copyFile",
         "title": "%command.copyFile.title%",
         "icon": "$(files)"
+      },
+      {
+        "command": "sortable-explorer.renameFile",
+        "title": "%command.renameFile.title%",
+        "icon": "$(edit)"
       }
     ],
     "keybindings": [],
@@ -210,6 +215,11 @@
           "command": "sortable-explorer.copyFile",
           "when": "view == sortable-explorer.fileExplorer && !viewItem.isDirectory",
           "group": "9_cutcopypaste@1"
+        },
+        {
+          "command": "sortable-explorer.renameFile",
+          "when": "view == sortable-explorer.fileExplorer && !viewItem.isDirectory",
+          "group": "9_cutcopypaste@1.5"
         },
         {
           "command": "sortable-explorer.deleteFile",

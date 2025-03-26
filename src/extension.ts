@@ -7,6 +7,7 @@ import { createNewNoteCommand } from "./commands/createNewNoteCommand";
 import { deleteFileCommand } from "./commands/deleteFileCommand";
 import { openSettingsCommand } from "./commands/openSettingsCommand";
 import { refreshFileExplorerCommand } from "./commands/refreshFileExplorerCommand";
+import { renameFileCommand } from "./commands/renameFileCommand";
 import { selectSortByCommand } from "./commands/selectSortByCommand";
 import {
   toggleSortDirectionCommand,
@@ -137,6 +138,14 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       COMMANDS.ADD_TO_EXCLUDE_PATTERNS,
       addToExcludePatternsCommand(fileExplorerProvider)
+    )
+  );
+
+  // ファイル名変更コマンドの登録
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      COMMANDS.RENAME_FILE,
+      renameFileCommand(fileExplorerProvider)
     )
   );
 }
