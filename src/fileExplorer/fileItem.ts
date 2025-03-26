@@ -10,7 +10,8 @@ export class FileItem extends vscode.TreeItem {
     public readonly createdTime: Date,
     public readonly resourceUri: vscode.Uri,
     public readonly isDirectory: boolean = false,
-    public readonly parent?: FileItem
+    public readonly parent?: FileItem,
+    public readonly isBookmarked: boolean = false
   ) {
     super(
       resourceUri,
@@ -28,10 +29,14 @@ export class FileItem extends vscode.TreeItem {
       };
     }
     
-    // アイコンの設定
-    this.iconPath = isDirectory
-      ? new vscode.ThemeIcon("folder")
-      : new vscode.ThemeIcon("file");
+    // アイコンの設定（ブックマーク状態に応じて変更）
+    if (isBookmarked) {
+      this.iconPath = new vscode.ThemeIcon("star-full");
+    } else {
+      this.iconPath = isDirectory
+        ? new vscode.ThemeIcon("folder")
+        : new vscode.ThemeIcon("file");
+    }
   }
 
   private getRelativeFolderPath(): string {

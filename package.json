@@ -96,6 +96,11 @@
           "id": "sortable-explorer.fileExplorer",
           "name": "%view.notepadFiles.name%",
           "icon": "$(notebook)"
+        },
+        {
+          "id": "sortable-explorer.bookmarks",
+          "name": "%view.bookmarks.name%",
+          "icon": "$(star)"
         }
       ]
     },
@@ -103,6 +108,11 @@
       {
         "command": "sortable-explorer.refreshFileExplorer",
         "title": "%command.refresh.title%",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "sortable-explorer.refreshBookmarkExplorer",
+        "title": "%command.refreshBookmarks.title%",
         "icon": "$(refresh)"
       },
       {
@@ -159,6 +169,26 @@
         "command": "sortable-explorer.renameFile",
         "title": "%command.renameFile.title%",
         "icon": "$(edit)"
+      },
+      {
+        "command": "sortable-explorer.toggleBookmark",
+        "title": "%command.toggleBookmark.title%",
+        "icon": "$(star)"
+      },
+      {
+        "command": "sortable-explorer.clearAllBookmarks",
+        "title": "%command.clearAllBookmarks.title%",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "sortable-explorer.toggleViewMode.bookmarks",
+        "title": "%command.toggleViewMode.title%",
+        "icon": "$(star)"
+      },
+      {
+        "command": "sortable-explorer.showBookmarkView",
+        "title": "%command.showBookmarkView.title%",
+        "icon": "$(bookmark)"
       }
     ],
     "keybindings": [],
@@ -167,6 +197,11 @@
         {
           "command": "sortable-explorer.createNewNote",
           "when": "view == sortable-explorer.fileExplorer",
+          "group": "navigation@000"
+        },
+        {
+          "command": "sortable-explorer.refreshBookmarkExplorer",
+          "when": "view == sortable-explorer.bookmarks",
           "group": "navigation@000"
         },
         {
@@ -192,6 +227,11 @@
         {
           "command": "sortable-explorer.toggleViewMode.flat",
           "when": "view == sortable-explorer.fileExplorer && sortable-explorer.viewModeIcon == 'flat'",
+          "group": "navigation@300"
+        },
+        {
+          "command": "sortable-explorer.toggleViewMode.bookmarks",
+          "when": "view == sortable-explorer.fileExplorer && sortable-explorer.viewModeIcon == 'bookmarks'",
           "group": "navigation@300"
         },
         {
@@ -230,6 +270,16 @@
           "command": "sortable-explorer.addToExcludePatterns",
           "when": "view == sortable-explorer.fileExplorer",
           "group": "7_modification"
+        },
+        {
+          "command": "sortable-explorer.toggleBookmark",
+          "when": "view == sortable-explorer.fileExplorer && !viewItem.isDirectory",
+          "group": "7_modification@1"
+        },
+        {
+          "command": "sortable-explorer.clearAllBookmarks",
+          "when": "view == sortable-explorer.fileExplorer",
+          "group": "7_modification@2"
         }
       ],
       "commandPalette": [

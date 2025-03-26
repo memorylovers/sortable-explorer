@@ -8,7 +8,9 @@
   "configuration.excludePatterns.description": "Patterns of files/folders to exclude from display (excluded from files included by includePatterns)",
   "configuration.viewMode.description": "File display mode (flat: flat display, tree: tree display)",
   "view.notepadFiles.name": "Explorer",
+  "view.bookmarks.name": "Bookmarks",
   "command.refresh.title": "Refresh",
+  "command.refreshBookmarks.title": "Refresh Bookmarks",
   "command.openSettings.title": "Open Settings",
   "command.createNewNote.title": "New Note",
   "command.selectSortBy.title": "Select Sort Method",
@@ -56,5 +58,16 @@
   "renameFile.noSelection": "No file selected for renaming.",
   "yes": "Yes",
   "no": "No",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "command.toggleBookmark.title": "Toggle Bookmark",
+  "command.clearAllBookmarks.title": "Clear All Bookmarks",
+  "command.showBookmarkView.title": "Show Bookmarks View",
+  "bookmark.added": "Bookmark added",
+  "bookmark.removed": "Bookmark removed",
+  "bookmark.error": "Failed to toggle bookmark",
+  "bookmark.noSelection": "No file selected for bookmarking",
+  "bookmark.clearConfirm": "Are you sure you want to clear all bookmarks?",
+  "bookmark.cleared": "All bookmarks cleared",
+  "bookmark.clearError": "Failed to clear bookmarks",
+  "viewMode.bookmarks": "Bookmarks"
 }

@@ -8,6 +8,7 @@ export const FILE_EXPLORER_ID = `${EXTENSION_NAME}.fileExplorer`;
 // コマンドID
 export const COMMANDS = {
   REFRESH_FILE_EXPLORER: `${EXTENSION_NAME}.refreshFileExplorer`,
+  REFRESH_BOOKMARK_EXPLORER: `${EXTENSION_NAME}.refreshBookmarkExplorer`,
   CREATE_NEW_NOTE: `${EXTENSION_NAME}.createNewNote`,
   TOGGLE_VIEW_MODE: `${EXTENSION_NAME}.toggleViewMode`,
   TOGGLE_SORT_DIRECTION: `${EXTENSION_NAME}.toggleSortDirection`,
@@ -17,6 +18,9 @@ export const COMMANDS = {
   SELECT_SORT_BY: `${EXTENSION_NAME}.selectSortBy`,
   ADD_TO_EXCLUDE_PATTERNS: `${EXTENSION_NAME}.addToExcludePatterns`,
   RENAME_FILE: `${EXTENSION_NAME}.renameFile`,
+  TOGGLE_BOOKMARK: `${EXTENSION_NAME}.toggleBookmark`,
+  CLEAR_ALL_BOOKMARKS: `${EXTENSION_NAME}.clearAllBookmarks`,
+  SHOW_BOOKMARK_VIEW: `${EXTENSION_NAME}.showBookmarkView`,
 } as const;
 
 // 設定のプロパティ名（プレフィックスなし）
@@ -32,6 +36,7 @@ export const CONFIG_KEYS = {
 export const ViewMode = {
   FLAT: "flat",
   TREE: "tree",
+  BOOKMARKS: "bookmarks",
 } as const;
 
 export type ViewModeType = (typeof ViewMode)[keyof typeof ViewMode];
@@ -62,4 +67,5 @@ export const DefaultPatterns = {
 export const CONTEXT_KEYS = {
   SORT_DIRECTION_ICON: `${EXTENSION_NAME}.sortDirectionIcon`,
   VIEW_MODE_ICON: `${EXTENSION_NAME}.viewModeIcon`,
+  BOOKMARK_ICON: `${EXTENSION_NAME}.bookmarkIcon`,
 } as const;

@@ -2,13 +2,17 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import { addToExcludePatternsCommand } from "./commands/addToExcludePatternsCommand";
+import { clearAllBookmarksCommand } from "./commands/clearAllBookmarksCommand";
 import { copyFileCommand } from "./commands/copyFileCommand";
 import { createNewNoteCommand } from "./commands/createNewNoteCommand";
 import { deleteFileCommand } from "./commands/deleteFileCommand";
 import { openSettingsCommand } from "./commands/openSettingsCommand";
+import { refreshBookmarkExplorerCommand } from "./commands/refreshBookmarkExplorerCommand";
 import { refreshFileExplorerCommand } from "./commands/refreshFileExplorerCommand";
 import { renameFileCommand } from "./commands/renameFileCommand";
 import { selectSortByCommand } from "./commands/selectSortByCommand";
+import { showBookmarkViewCommand } from "./commands/showBookmarkViewCommand";
+import { toggleBookmarkCommand } from "./commands/toggleBookmarkCommand";
 import {
   toggleSortDirectionCommand,
   updateSortDirectionIcon,
@@ -23,6 +27,7 @@ import {
   FILE_EXPLORER_ID,
 } from "./configuration/configurationConstants";
 import { ConfigurationManager } from "./configuration/configurationManager";
+import { BookmarkExplorerProvider } from "./fileExplorer/bookmarkExplorerProvider";
 import { FileExplorerProvider } from "./fileExplorer/fileExplorerProvider";
 import { FileSystemHelper } from "./fileExplorer/fileSystemHelper";
 
@@ -35,8 +40,9 @@ export function activate(context: vscode.ExtensionContext) {
     `Congratulations, your extension "${EXTENSION_NAME}" is now active!`
   );
 
-  // FileExplorerProviderのインスタンスを作成
-  const fileExplorerProvider = new FileExplorerProvider();
+  // FileExplorerProviderとBookmarkExplorerProviderのインスタンスを作成
+  const fileExplorerProvider = new FileExplorerProvider(context);
+  const bookmarkExplorerProvider = new BookmarkExplorerProvider(context);
   const fileSystemHelper = new FileSystemHelper();
 
   // 初期状態の並び順の方向に応じてアイコンを設定
@@ -53,11 +59,25 @@ export function activate(context: vscode.ExtensionContext) {
     fileExplorerProvider
   );
 
+  // ブックマークビューの登録
+  vscode.window.registerTreeDataProvider(
+    "sortable-explorer.bookmarks",
+    bookmarkExplorerProvider
+  );
+
   // コマンドの登録
   context.subscriptions.push(
     vscode.commands.registerCommand(
       COMMANDS.REFRESH_FILE_EXPLORER,
       refreshFileExplorerCommand(fileExplorerProvider)
+    )
+  );
+
+  // ブックマークエクスプローラー更新コマンドの登録
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      COMMANDS.REFRESH_BOOKMARK_EXPLORER,
+      refreshBookmarkExplorerCommand(bookmarkExplorerProvider)
     )
   );
 
@@ -81,7 +101,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(
       `${COMMANDS.TOGGLE_VIEW_MODE}.flat`,
-      toggleViewModeCommand(fileExplorerProvider)
+      toggleViewModeCommand(fileExplorerProvider, bookmarkExplorerProvider)
     )
   );
 
@@ -89,7 +109,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(
       `${COMMANDS.TOGGLE_VIEW_MODE}.tree`,
-      toggleViewModeCommand(fileExplorerProvider)
+      toggleViewModeCommand(fileExplorerProvider, bookmarkExplorerProvider)
     )
   );
 
@@ -146,6 +166,38 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       COMMANDS.RENAME_FILE,
       renameFileCommand(fileExplorerProvider)
+    )
+  );
+
+  // ブックマーク切り替えコマンドの登録
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      COMMANDS.TOGGLE_BOOKMARK,
+      toggleBookmarkCommand(context, fileExplorerProvider, bookmarkExplorerProvider)
+    )
+  );
+
+  // すべてのブックマーククリアコマンドの登録
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      COMMANDS.CLEAR_ALL_BOOKMARKS,
+      clearAllBookmarksCommand(context, fileExplorerProvider, bookmarkExplorerProvider)
+    )
+  );
+
+  // ブックマークビューモード切り替えコマンドの登録
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      `${COMMANDS.TOGGLE_VIEW_MODE}.bookmarks`,
+      toggleViewModeCommand(fileExplorerProvider, bookmarkExplorerProvider)
+    )
+  );
+
+  // ブックマークビュー表示コマンドの登録
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      COMMANDS.SHOW_BOOKMARK_VIEW,
+      showBookmarkViewCommand()
     )
   );
 }

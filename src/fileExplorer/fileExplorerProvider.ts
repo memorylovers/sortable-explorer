@@ -4,6 +4,7 @@ import { FileSystemHelper } from "./fileSystemHelper";
 import { SortingStrategyFactory } from "./sortingStrategy";
 import { ConfigurationManager } from "../configuration/configurationManager";
 import { SortDirection, EXTENSION_NAME, ViewMode } from "../configuration/configurationConstants";
+import { BookmarkInfo } from "../commands/toggleBookmarkCommand";
 
 export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
   private _onDidChangeTreeData: vscode.EventEmitter<
@@ -15,7 +16,7 @@ export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
 
   private fileSystemHelper: FileSystemHelper;
 
-  constructor() {
+  constructor(private readonly context: vscode.ExtensionContext) {
     this.fileSystemHelper = new FileSystemHelper();
 
     // 設定変更を監視
@@ -43,6 +44,56 @@ export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
   async getChildren(element?: FileItem): Promise<FileItem[]> {
     // 表示モードを取得
     const viewMode = ConfigurationManager.getViewMode();
+    
+    // ブックマークモードの場合
+    if (viewMode === ViewMode.BOOKMARKS && !element) {
+      const workspaceFolders = vscode.workspace.workspaceFolders;
+      if (!workspaceFolders) {
+        return [];
+      }
+      
+      // ブックマーク一覧を取得
+      const bookmarks: BookmarkInfo[] = this.context.workspaceState.get("sortable-explorer.bookmarks", []);
+      
+      // タイムスタンプの降順でソート（最近追加したものが先頭に来るように）
+      bookmarks.sort((a, b) => b.timestamp - a.timestamp);
+      
+      // ブックマークされたファイルのパスのリスト
+      const bookmarkedPaths = bookmarks.map(bookmark => bookmark.filePath);
+      
+      // ブックマークされたファイルのみを取得
+      let bookmarkedFiles: FileItem[] = [];
+      for (const folder of workspaceFolders) {
+        const files = await this.fileSystemHelper.getFiles(
+          folder.uri.fsPath,
+          ConfigurationManager.getIncludePatterns(),
+          ConfigurationManager.getExcludePatterns()
+        );
+        
+        // ブックマークされたファイルのみをフィルタリング
+        const filteredFiles = files.filter(file =>
+          !file.isDirectory && bookmarkedPaths.includes(file.filePath)
+        ).map(file => new FileItem(
+          file.name,
+          file.filePath,
+          file.modifiedTime,
+          file.createdTime,
+          file.resourceUri,
+          file.isDirectory,
+          file.parent,
+          true // isBookmarked = true
+        ));
+        
+        bookmarkedFiles = bookmarkedFiles.concat(filteredFiles);
+      }
+      
+      // ブックマークの追加順（タイムスタンプの降順）でソート
+      return bookmarkedFiles.sort((a, b) => {
+        const aIndex = bookmarkedPaths.indexOf(a.filePath);
+        const bIndex = bookmarkedPaths.indexOf(b.filePath);
+        return aIndex - bIndex;
+      });
+    }
     
     // ツリー表示モードで、要素が指定されている場合（ディレクトリの展開）
     if (viewMode === ViewMode.TREE && element && element.isDirectory) {

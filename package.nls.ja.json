@@ -8,7 +8,9 @@
   "configuration.excludePatterns.description": "表示から除外するファイル/フォルダのパターン（includeに含まれるファイルの中から除外されます）",
   "configuration.viewMode.description": "ファイルの表示モード（flat: フラット表示, tree: ツリー表示）",
   "view.notepadFiles.name": "Explorer",
+  "view.bookmarks.name": "ブックマーク",
   "command.refresh.title": "更新",
+  "command.refreshBookmarks.title": "ブックマークを更新",
   "command.openSettings.title": "設定を開く",
   "command.createNewNote.title": "新規ノート",
   "command.selectSortBy.title": "並び順を選択",
@@ -56,5 +58,16 @@
   "renameFile.noSelection": "名前を変更するファイルが選択されていません。",
   "yes": "はい",
   "no": "いいえ",
-  "cancel": "キャンセル"
+  "cancel": "キャンセル",
+  "command.toggleBookmark.title": "ブックマークの切り替え",
+  "command.clearAllBookmarks.title": "すべてのブックマークをクリア",
+  "command.showBookmarkView.title": "ブックマークビューを表示",
+  "bookmark.added": "ブックマークに追加しました",
+  "bookmark.removed": "ブックマークから削除しました",
+  "bookmark.error": "ブックマークの切り替えに失敗しました",
+  "bookmark.noSelection": "ブックマークするファイルが選択されていません",
+  "bookmark.clearConfirm": "すべてのブックマークをクリアしますか？",
+  "bookmark.cleared": "すべてのブックマークをクリアしました",
+  "bookmark.clearError": "ブックマークのクリアに失敗しました",
+  "viewMode.bookmarks": "ブックマーク"
 }
