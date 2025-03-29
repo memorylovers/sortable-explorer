@@ -29,9 +29,11 @@ export class FileItem extends vscode.TreeItem {
     }
 
     // コンテキスト値を設定 (ブックマーク状態を含む)
-    this.contextValue = "fileItem"; // 基本のコンテキスト値
+    // コンテキスト値を設定 (ブックマーク状態を考慮)
     if (this.isBookmarked) {
-      this.contextValue += " bookmarked"; // ブックマーク済みなら追加
+      this.contextValue = "bookmarked"; // ブックマーク済みの場合
+    } else {
+      this.contextValue = "fileItem"; // ブックマークされていない場合
     }
 
     if (!isDirectory) {

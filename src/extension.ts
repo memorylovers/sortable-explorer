@@ -174,6 +174,26 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(COMMANDS.MOVE_FILE, moveFileCommand)
   );
+
+  // ブックマーク追加コマンドの登録
+  const addBookmarkCommand = new AddBookmarkCommand(bookmarkManager);
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      COMMANDS.ADD_BOOKMARK,
+      addBookmarkCommand.execute,
+      addBookmarkCommand // this コンテキストをバインド
+    )
+  );
+
+  // ブックマーク削除コマンドの登録
+  const removeBookmarkCommand = new RemoveBookmarkCommand(bookmarkManager);
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      COMMANDS.REMOVE_BOOKMARK,
+      removeBookmarkCommand.execute,
+      removeBookmarkCommand // this コンテキストをバインド
+    )
+  );
 }
 
 // This method is called when your extension is deactivated

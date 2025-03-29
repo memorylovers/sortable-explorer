@@ -172,12 +172,12 @@
         "icon": "$(file-symlink-file)"
       },
       {
-        "command": "sortableExplorer.addBookmark",
+        "command": "sortable-explorer.addBookmark",
         "title": "%command.addBookmark.title%",
         "icon": "$(star-empty)"
       },
       {
-        "command": "sortableExplorer.removeBookmark",
+        "command": "sortable-explorer.removeBookmark",
         "title": "%command.removeBookmark.title%",
         "icon": "$(star-full)"
       }
@@ -258,13 +258,13 @@
           "group": "7_modification"
         },
         {
-          "command": "sortableExplorer.addBookmark",
+          "command": "sortable-explorer.addBookmark",
           "when": "(view == sortable-explorer.fileExplorer || view == sortable-explorer.bookmarks) && !(viewItem.contextValue =~ /bookmarked/)",
           "group": "navigation@1"
         },
         {
-          "command": "sortableExplorer.removeBookmark",
-          "when": "(view == sortable-explorer.fileExplorer || view == sortable-explorer.bookmarks) && viewItem.contextValue =~ /bookmarked/",
+          "command": "sortable-explorer.removeBookmark",
+          "when": "view == sortable-explorer.fileExplorer || view == sortable-explorer.bookmarks",
           "group": "navigation@1"
         }
       ],
