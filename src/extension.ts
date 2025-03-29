@@ -5,6 +5,7 @@ import { addToExcludePatternsCommand } from "./commands/addToExcludePatternsComm
 import { copyFileCommand } from "./commands/copyFileCommand";
 import { createNewNoteCommand } from "./commands/createNewNoteCommand";
 import { deleteFileCommand } from "./commands/deleteFileCommand";
+import { moveFileCommand } from "./commands/moveFileCommand"; // 追加
 import { openSettingsCommand } from "./commands/openSettingsCommand";
 import { refreshFileExplorerCommand } from "./commands/refreshFileExplorerCommand";
 import { renameFileCommand } from "./commands/renameFileCommand";
@@ -147,6 +148,11 @@ export function activate(context: vscode.ExtensionContext) {
       COMMANDS.RENAME_FILE,
       renameFileCommand(fileExplorerProvider)
     )
+  );
+
+  // ファイル移動コマンドの登録
+  context.subscriptions.push(
+    vscode.commands.registerCommand(COMMANDS.MOVE_FILE, moveFileCommand)
   );
 }
 
