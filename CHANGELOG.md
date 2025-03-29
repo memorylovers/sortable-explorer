@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.2.3
+
+[compare changes](https://github.com/memorylovers/sortable-explorer/compare/v0.2.2...v0.2.3)
+
+### 🚀 Enhancements
+
+- Add bookmark feature ([#9](https://github.com/memorylovers/sortable-explorer/pull/9))
+
+### 📖 Documentation
+
+- Update README to include bookmark functionality ([1453f33](https://github.com/memorylovers/sortable-explorer/commit/1453f33))
+
+### 🏡 Chore
+
+- Add guideline for creating md files in memory-bank/plans ([c0bb05a](https://github.com/memorylovers/sortable-explorer/commit/c0bb05a))
+
+### 🤖 CI
+
+- Enhance release workflow to support automatic and selected changelog generation ([54cf8c5](https://github.com/memorylovers/sortable-explorer/commit/54cf8c5))
+
 ## v0.2.2
 
 [compare changes](https://github.com/memorylovers/sortable-explorer/compare/v0.2.1...v0.2.2)
