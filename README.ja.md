@@ -1,9 +1,12 @@
 # Sortable Explorer
 
-Sortable Explorerは、並び替えができるエクスプローラーのVSCode拡張機能です。  
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/memorylovers.sortable-explorer?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=memorylovers.sortable-explorer)
+[![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/memorylovers.sortable-explorer?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=memorylovers.sortable-explorer)
+
+Sortable Explorerは、並び替えができるエクスプローラーのVSCode拡張機能です。
 ファイルの表示方法やソート方法を設定で切り替えることができます。
 
-*Read this in [English](README.en.md)*
+*Read this in [English](README.md)*
 
 ## Motivation
 
@@ -25,9 +28,26 @@ Sortable Explorerでは、複数の表示モードや並び替え設定ができ
 - **対象ファイルの指定**: 対象にするパスと除外するパスを設定できます
 - **日付付き新規ファイルの作成**: 「タイトル」を入力すると、`YYYYMMDD_<title>.md`を作成できます。同名のファイルが既に存在する場合は、`YYYYMMDD_<title>_1.md`のように連番が付与されます
 
-また、右クリックで表示するコンテキストメニューからは、以下も可能です
+**コンテキストメニュー (右クリック)**
 
-- **新規ノートの作成**: 選択したフォルダ内に新規ノートを作成できます
+右クリックメニューから以下の操作が可能です:
+
+- **新規ノートの作成**: 選択したフォルダ内、またはワークスペースのルートに新規ノートを作成します。
+- **ファイルのコピー**: 選択したファイルをコピーします。
+- **ファイル名の変更**: 選択したファイルの名前を変更します。
+- **ファイルの削除**: 選択したファイルまたはフォルダを削除します。
+- **除外対象への追加**: 選択したファイルまたはフォルダを設定の除外リストに追加します。
+
+**ビュータイトルバー**
+
+ビューのタイトルバーにあるアイコンから、以下のクイック操作が可能です:
+
+- **新規ノート**: 新しいノートを作成します。
+- **ソート方法の選択**: ソート基準（名前、作成日時、更新日時）を選択します。
+- **ソート方向の切り替え**: 昇順と降順を切り替えます。
+- **表示モードの切り替え**: ツリー表示とフラット表示を切り替えます。
+- **設定を開く**: 拡張機能の設定を開きます。
+- **更新**: ファイルエクスプローラーの表示を更新します。
 - **ファイルの削除**: Sortable Explorerからでもファイルの削除ができます
 - **除外対象への追加**: Sortable Explorerからフォルダやファイルを除外対象に追加できます
 
@@ -50,7 +70,7 @@ Sortable Explorerでは、複数の表示モードや並び替え設定ができ
 - **sortable-explorer.includePatterns**: 表示対象のファイル/フォルダのパターン(空の場合はすべてのファイルが対象)
 - **sortable-explorer.excludePatterns**: 除外対象のファイル/フォルダのパターン
 
-`includePatterns`と`excludePatterns`の判定には、  
+`includePatterns`と`excludePatterns`の判定には、
 [glob](https://github.com/isaacs/node-glob)や[micromatch](https://github.com/micromatch/micromatch)を利用しています
 
 デフォルト値は、以下のとおりです。
@@ -59,7 +79,7 @@ Sortable Explorerでは、複数の表示モードや並び替え設定ができ
 // Sortable Explorer デフォルト設定
 {
   "sortable-explorer.viewMode": "tree",
-  "sortable-explorer.sortBy": "name",
+  "sortable-explorer.sortBy": "modified", // デフォルトは更新日時順
   "sortable-explorer.sortDirection": "desc",
   "sortable-explorer.includePatterns": [
     "**/*.md",

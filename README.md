@@ -1,6 +1,9 @@
 # Sortable Explorer
 
-Sortable Explorer is a VSCode extension that provides a sortable file explorer.  
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/memorylovers.sortable-explorer?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=memorylovers.sortable-explorer)
+[![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/memorylovers.sortable-explorer?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=memorylovers.sortable-explorer)
+
+Sortable Explorer is a VSCode extension that provides a sortable file explorer.
 You can switch file display modes and sorting methods through settings.
 
 *この文書は[日本語](README.ja.md)でもご覧になれます*
@@ -25,9 +28,26 @@ Sortable Explorer is a file explorer that allows multiple display modes and sort
 - **Target file specification**: You can set paths to include and exclude
 - **Create a new date-prefixed file**: Enter a "Title" to create `YYYYMMDD_<title>.md`. If a file with the same name already exists, a sequential number will be added, like `YYYYMMDD_<title>_1.md`
 
-Additionally, the following options are available from the context menu (right-click):
+**Context Menu (Right-click)**
 
-- **Create a new note**: You can create a new note in the selected folder
+The following actions are available from the context menu:
+
+- **Create a new note**: Create a new note in the selected folder or workspace root.
+- **Copy file**: Copy the selected file.
+- **Rename file**: Rename the selected file.
+- **Delete file**: Delete the selected file or folder.
+- **Add to exclude patterns**: Add the selected file or folder to the exclusion list in settings.
+
+**View Title Bar**
+
+Quick actions are available via icons in the view's title bar:
+
+- **New Note**: Create a new note.
+- **Select Sort By**: Choose the sorting criteria (name, created, modified).
+- **Toggle Sort Direction**: Switch between ascending and descending order.
+- **Toggle View Mode**: Switch between tree and flat view.
+- **Open Settings**: Open the extension's settings.
+- **Refresh**: Refresh the file explorer view.
 - **Delete files**: You can delete files directly from Sortable Explorer
 - **Add to exclude patterns**: You can add folders or files to the exclude patterns directly from Sortable Explorer
 
@@ -50,7 +70,7 @@ The following items can be configured:
 - **sortable-explorer.includePatterns**: Patterns for files/folders to display (if empty, all files are included)
 - **sortable-explorer.excludePatterns**: Patterns for files/folders to exclude
 
-For pattern matching in `includePatterns` and `excludePatterns`,  
+For pattern matching in `includePatterns` and `excludePatterns`,
 [glob](https://github.com/isaacs/node-glob) and [micromatch](https://github.com/micromatch/micromatch) are used.
 
 Default values are as follows:
@@ -59,7 +79,7 @@ Default values are as follows:
 // Sortable Explorer default settings
 {
   "sortable-explorer.viewMode": "tree",
-  "sortable-explorer.sortBy": "name",
+  "sortable-explorer.sortBy": "modified", // Default sort by modification date
   "sortable-explorer.sortDirection": "desc",
   "sortable-explorer.includePatterns": [
     "**/*.md",
