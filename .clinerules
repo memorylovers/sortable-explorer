@@ -5,6 +5,7 @@
 - Issueは、`.github/ISSUE_TEMPLATE/feature.md`を元に作成すること
 - PRは、`.github/PULL_REQUEST_TEMPLATE.md`を元に作成すること
 - GitHubへのアクセスは、MCPサーバを利用すること
+- 計画時のmdファイルは、`memory-bank/plans`配下に作成すること
 
 # Cline's Memory Bank
 
