@@ -1,4 +1,3 @@
-import * as vscode from "vscode";
 import { FileItem } from "./fileItem";
 import { ConfigurationManager } from "../configuration/configurationManager";
 import { ViewMode } from "../configuration/configurationConstants";
@@ -15,7 +14,7 @@ export class FileSystemHelper {
     this.strategies = new Map<string, FileSystemStrategy>();
     this.strategies.set(ViewMode.FLAT, new FlatFileSystemStrategy());
     this.strategies.set(ViewMode.TREE, new TreeFileSystemStrategy());
-    
+
     // デフォルト戦略を設定
     const viewMode = ConfigurationManager.getViewMode();
     this.currentStrategy = this.strategies.get(viewMode) || this.strategies.get(ViewMode.FLAT)!;
@@ -38,7 +37,7 @@ export class FileSystemHelper {
     // 表示モードを取得して適切な戦略を設定
     const viewMode = ConfigurationManager.getViewMode();
     this.currentStrategy = this.strategies.get(viewMode) || this.currentStrategy;
-    
+
     // 選択された戦略を使用してファイルを取得
     return this.currentStrategy.getFiles(workspacePath, includes, excludes);
   }
@@ -60,14 +59,14 @@ export class FileSystemHelper {
   public async createNewNote(targetDirectory: string, title: string): Promise<string> {
     return this.currentStrategy.createNewNote(targetDirectory, title);
   }
-  
+
   /**
    * 戦略を直接設定するメソッド（テストなどで使用）
    */
   public setStrategy(strategy: FileSystemStrategy): void {
     this.currentStrategy = strategy;
   }
-  
+
   /**
    * 新しい戦略を登録するメソッド（拡張性のため）
    */

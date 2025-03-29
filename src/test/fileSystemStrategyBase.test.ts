@@ -8,9 +8,9 @@ import { FileSystemStrategyBase } from '../fileExplorer/strategies/fileSystemStr
 class TestFileSystemStrategy extends FileSystemStrategyBase {
   // 抽象メソッドの実装（テストでは使用しないがインターフェースを満たすために必要）
   public async getFiles(
-    workspacePath: string,
-    includes: string[],
-    excludes: string[]
+    _workspacePath: string,
+    _includes: string[],
+    _excludes: string[]
   ): Promise<any[]> {
     return [];
   }
