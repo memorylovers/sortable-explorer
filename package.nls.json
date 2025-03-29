@@ -18,6 +18,7 @@
   "command.copyFile.title": "Copy File",
   "command.renameFile.title": "Rename File",
   "command.addToExcludePatterns.title": "Exclude from Display",
+  "command.moveFile.title": "Move File",
   "sortBy.name": "Name",
   "sortBy.created": "Date Created",
   "sortBy.modified": "Date Modified",
@@ -54,7 +55,16 @@
   "renameFile.renamed": "File renamed: {0} to {1}",
   "renameFile.error": "Failed to rename file",
   "renameFile.noSelection": "No file selected for renaming.",
-  "yes": "Yes",
-  "no": "No",
-  "cancel": "Cancel"
+  "moveFile.selectDestinationFolder.placeholder": "Select destination folder",
+  "moveFile.info.noFolders": "No folders found in the workspace to move the file to.",
+  "moveFile.info.sourceEqualsDestination": "Source and destination are the same.",
+  "moveFile.confirmOverwrite": "File \"{0}\" already exists in \"{1}\". Overwrite?",
+  "moveFile.success": "Moved \"{0}\" to \"{1}\".",
+  "moveFile.error.noFileSelected": "No file selected.",
+  "moveFile.error.cannotMoveFolder": "Cannot move a folder with this command.",
+  "moveFile.error.fetchFoldersFailed": "Failed to get workspace folders: {0}",
+  "moveFile.error.moveFailed": "Failed to move \"{0}\" to \"{1}\": {2}",
+  "common.yes": "Yes",
+  "common.no": "No",
+  "common.cancel": "Cancel"
 }

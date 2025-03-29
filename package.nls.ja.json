@@ -18,6 +18,7 @@
   "command.copyFile.title": "ファイルをコピー",
   "command.renameFile.title": "ファイル名変更",
   "command.addToExcludePatterns.title": "表示から除外",
+  "command.moveFile.title": "ファイルを移動",
   "sortBy.name": "名前順",
   "sortBy.created": "作成日時順",
   "sortBy.modified": "更新日時順",
@@ -54,7 +55,16 @@
   "renameFile.renamed": "ファイル名を変更しました: {0} から {1}",
   "renameFile.error": "ファイル名の変更に失敗しました",
   "renameFile.noSelection": "名前を変更するファイルが選択されていません。",
-  "yes": "はい",
-  "no": "いいえ",
-  "cancel": "キャンセル"
+  "moveFile.selectDestinationFolder.placeholder": "移動先のフォルダを選択してください",
+  "moveFile.info.noFolders": "移動先のフォルダがワークスペースに見つかりません。",
+  "moveFile.info.sourceEqualsDestination": "移動元と移動先が同じです。",
+  "moveFile.confirmOverwrite": "ファイル \"{0}\" は \"{1}\" に既に存在します。上書きしますか？",
+  "moveFile.success": "\"{0}\" を \"{1}\" に移動しました。",
+  "moveFile.error.noFileSelected": "ファイルが選択されていません。",
+  "moveFile.error.cannotMoveFolder": "このコマンドでフォルダを移動することはできません。",
+  "moveFile.error.fetchFoldersFailed": "ワークスペースフォルダの取得に失敗しました: {0}",
+  "moveFile.error.moveFailed": "\"{0}\" の \"{1}\" への移動に失敗しました: {2}",
+  "common.yes": "はい",
+  "common.no": "いいえ",
+  "common.cancel": "キャンセル"
 }
