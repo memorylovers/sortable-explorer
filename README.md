@@ -27,6 +27,7 @@ Sortable Explorer is a file explorer that allows multiple display modes and sort
 - **Multiple sorting options**: Ascending/descending sort by "File name", "Creation date", and "Modification date"
 - **Target file specification**: You can set paths to include and exclude
 - **Create a new date-prefixed file**: Enter a "Title" to create `YYYYMMDD_<title>.md`. If a file with the same name already exists, a sequential number will be added, like `YYYYMMDD_<title>_1.md`
+- **Bookmark files**: Add frequently used files to the bookmark list for quick access.
 
 **Context Menu (Right-click)**
 
@@ -37,6 +38,8 @@ The following actions are available from the context menu:
 - **Rename file**: Rename the selected file.
 - **Delete file**: Delete the selected file or folder.
 - **Add to exclude patterns**: Add the selected file or folder to the exclusion list in settings.
+- **Add Bookmark**: Add the selected file to the bookmark list.
+- **Remove Bookmark**: Remove the selected file from the bookmark list.
 
 **View Title Bar**
 
