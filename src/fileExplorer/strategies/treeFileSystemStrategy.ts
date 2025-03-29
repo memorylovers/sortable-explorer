@@ -4,6 +4,7 @@ import * as path from "path";
 import * as vscode from "vscode";
 import { FileItem } from "../fileItem";
 import { FileSystemStrategyBase } from "./fileSystemStrategyBase";
+import { BookmarkManager } from "../../bookmark/BookmarkManager"; // BookmarkManagerをインポート
 
 export class TreeFileSystemStrategy extends FileSystemStrategyBase {
   /**
@@ -13,14 +14,40 @@ export class TreeFileSystemStrategy extends FileSystemStrategyBase {
   public async getFiles(
     workspacePath: string,
     includes: string[],
-    excludes: string[]
+    excludes: string[],
+    bookmarkManager?: BookmarkManager // BookmarkManagerをオプション引数として追加
+  ): Promise<FileItem[]> {
+    return this.readDirectory(workspacePath, includes, excludes, bookmarkManager);
+  }
+
+  /**
+   * 指定されたディレクトリの子要素を取得
+   */
+  public async getChildren(
+    directoryPath: string,
+    includes: string[],
+    excludes: string[],
+    bookmarkManager?: BookmarkManager // BookmarkManagerをオプション引数として追加
+  ): Promise<FileItem[]> {
+    // getFilesと同じロジックでディレクトリを読む
+    return this.readDirectory(directoryPath, includes, excludes, bookmarkManager);
+  }
+
+  /**
+   * 指定されたディレクトリの内容を読み取り、FileItemのリストを返す共通メソッド
+   */
+  private async readDirectory(
+    directoryPath: string,
+    includes: string[],
+    excludes: string[],
+    bookmarkManager?: BookmarkManager
   ): Promise<FileItem[]> {
     try {
       const result: FileItem[] = [];
 
       // 1. ディレクトリを取得
       const directories = await fg.async(["*"], {
-        cwd: workspacePath, // 検索の基準ディレクトリ
+        cwd: directoryPath, // 検索の基準ディレクトリ
         absolute: true, // 絶対パスで結果を返す
         onlyDirectories: true, // ディレクトリのみを取得
         deep: 1, // 検索の深さを1に制限（直下のみ）
@@ -41,7 +68,9 @@ export class TreeFileSystemStrategy extends FileSystemStrategyBase {
               stats.mtime,
               stats.birthtime,
               vscode.Uri.file(dirPath),
-              true // isDirectory = true
+              true, // isDirectory = true
+              undefined, // parent は undefined (ルートレベルまたはgetChildrenの直接の子)
+              bookmarkManager // BookmarkManagerを渡す
             )
           );
         } catch (error) {
@@ -53,7 +82,7 @@ export class TreeFileSystemStrategy extends FileSystemStrategyBase {
       // includesパターンが指定されている場合はそれを使用し、そうでなければすべてのファイルを対象とする
       const patterns = includes.length > 0 ? includes : ["*"];
       const files = await fg.async(patterns, {
-        cwd: workspacePath, // 検索の基準ディレクトリ
+        cwd: directoryPath, // 検索の基準ディレクトリ
         absolute: true, // 絶対パスで結果を返す
         onlyFiles: true, // ファイルのみを取得
         deep: 1, // 検索の深さを1に制限（直下のみ）
@@ -74,7 +103,9 @@ export class TreeFileSystemStrategy extends FileSystemStrategyBase {
               stats.mtime,
               stats.birthtime,
               vscode.Uri.file(filePath),
-              false // isDirectory = false
+              false, // isDirectory = false
+              undefined, // parent は undefined (ルートレベルまたはgetChildrenの直接の子)
+              bookmarkManager // BookmarkManagerを渡す
             )
           );
         } catch (error) {
@@ -84,7 +115,7 @@ export class TreeFileSystemStrategy extends FileSystemStrategyBase {
 
       return result;
     } catch (error) {
-      console.error(`Error reading directory ${workspacePath}:`, error);
+      console.error(`Error reading directory ${directoryPath}:`, error);
       return [];
     }
   }

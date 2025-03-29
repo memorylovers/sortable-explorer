@@ -1,8 +1,11 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import * as fs from "fs";
+import { BookmarkManager } from "../bookmark/BookmarkManager"; // BookmarkManagerをインポート
 
 export class FileItem extends vscode.TreeItem {
+  public isBookmarked: boolean = false; // ブックマーク状態を保持
+
   constructor(
     public readonly name: string,
     public readonly filePath: string,
@@ -10,7 +13,8 @@ export class FileItem extends vscode.TreeItem {
     public readonly createdTime: Date,
     public readonly resourceUri: vscode.Uri,
     public readonly isDirectory: boolean = false,
-    public readonly parent?: FileItem
+    public readonly parent?: FileItem,
+    bookmarkManager?: BookmarkManager // BookmarkManagerを受け取る (オプション)
   ) {
     super(
       resourceUri,
@@ -18,7 +22,18 @@ export class FileItem extends vscode.TreeItem {
         ? vscode.TreeItemCollapsibleState.Collapsed
         : vscode.TreeItemCollapsibleState.None
     );
-    
+
+    // ブックマーク状態を設定
+    if (bookmarkManager) {
+      this.isBookmarked = bookmarkManager.isBookmarked(this.resourceUri);
+    }
+
+    // コンテキスト値を設定 (ブックマーク状態を含む)
+    this.contextValue = "fileItem"; // 基本のコンテキスト値
+    if (this.isBookmarked) {
+      this.contextValue += " bookmarked"; // ブックマーク済みなら追加
+    }
+
     if (!isDirectory) {
       this.description = this.getRelativeFolderPath();
       this.command = {
@@ -27,11 +42,15 @@ export class FileItem extends vscode.TreeItem {
         arguments: [resourceUri],
       };
     }
-    
-    // アイコンの設定
-    this.iconPath = isDirectory
-      ? new vscode.ThemeIcon("folder")
-      : new vscode.ThemeIcon("file");
+
+    // アイコンの設定 (ブックマーク状態を考慮)
+    if (this.isBookmarked) {
+      this.iconPath = new vscode.ThemeIcon("star-full"); // ブックマーク済みは星アイコン
+    } else {
+      this.iconPath = isDirectory
+        ? new vscode.ThemeIcon("folder")
+        : new vscode.ThemeIcon("file"); // 通常のアイコン
+    }
   }
 
   private getRelativeFolderPath(): string {
@@ -47,6 +66,10 @@ export class FileItem extends vscode.TreeItem {
         const directoryPath = path.dirname(relativePath);
         // 一番親のフォルダを表示しないように修正
         const pathParts = directoryPath.split(path.sep);
+        // ルートディレクトリ直下のファイルの場合、ディレクトリパスは '.' になるためそのまま返す
+        if (directoryPath === '.') {
+            return directoryPath;
+        }
         if (pathParts.length <= 1) {
           return directoryPath;
         }

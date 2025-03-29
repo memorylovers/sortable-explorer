@@ -1,11 +1,17 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
+// Bookmark関連のクラスをインポート
+import { BookmarkManager } from "./bookmark/BookmarkManager";
+import { BookmarkExplorerProvider } from "./bookmark/BookmarkExplorerProvider";
+import { AddBookmarkCommand } from "./commands/addBookmarkCommand";
+import { RemoveBookmarkCommand } from "./commands/removeBookmarkCommand";
+// 既存のコマンドとクラス
 import { addToExcludePatternsCommand } from "./commands/addToExcludePatternsCommand";
 import { copyFileCommand } from "./commands/copyFileCommand";
 import { createNewNoteCommand } from "./commands/createNewNoteCommand";
 import { deleteFileCommand } from "./commands/deleteFileCommand";
-import { moveFileCommand } from "./commands/moveFileCommand"; // 追加
+import { moveFileCommand } from "./commands/moveFileCommand";
 import { openSettingsCommand } from "./commands/openSettingsCommand";
 import { refreshFileExplorerCommand } from "./commands/refreshFileExplorerCommand";
 import { renameFileCommand } from "./commands/renameFileCommand";
@@ -21,7 +27,8 @@ import {
 import {
   COMMANDS,
   EXTENSION_NAME,
-  FILE_EXPLORER_ID,
+  FILE_EXPLORER_VIEW_ID, // 定数名を変更 (例)
+  BOOKMARK_EXPLORER_VIEW_ID, // 新しい定数を追加 (例)
 } from "./configuration/configurationConstants";
 import { ConfigurationManager } from "./configuration/configurationManager";
 import { FileExplorerProvider } from "./fileExplorer/fileExplorerProvider";
@@ -36,9 +43,16 @@ export function activate(context: vscode.ExtensionContext) {
     `Congratulations, your extension "${EXTENSION_NAME}" is now active!`
   );
 
-  // FileExplorerProviderのインスタンスを作成
-  const fileExplorerProvider = new FileExplorerProvider();
-  const fileSystemHelper = new FileSystemHelper();
+  // BookmarkManagerの初期化
+  const bookmarkManager = new BookmarkManager(context.workspaceState);
+  bookmarkManager.initialize(); // ブックマークを読み込む
+
+  // FileExplorerProviderのインスタンスを作成 (BookmarkManagerを渡す)
+  const fileExplorerProvider = new FileExplorerProvider(bookmarkManager);
+  const fileSystemHelper = new FileSystemHelper(); // FileSystemHelperはBookmarkManagerを直接は使わない
+
+  // BookmarkExplorerProviderのインスタンスを作成 (BookmarkManagerを渡す)
+  const bookmarkExplorerProvider = new BookmarkExplorerProvider(bookmarkManager);
 
   // 初期状態の並び順の方向に応じてアイコンを設定
   const initialSortDirection = ConfigurationManager.getSortDirection();
@@ -48,10 +62,16 @@ export function activate(context: vscode.ExtensionContext) {
   const initialViewMode = ConfigurationManager.getViewMode();
   updateViewModeIcon(initialViewMode);
 
-  // 独立したパネルのツリービューの登録
+  // 既存のファイルエクスプローラービューの登録
   vscode.window.registerTreeDataProvider(
-    FILE_EXPLORER_ID,
+    FILE_EXPLORER_VIEW_ID, // 更新された定数を使用
     fileExplorerProvider
+  );
+
+  // 新しいブックマークビューの登録
+  vscode.window.registerTreeDataProvider(
+    BOOKMARK_EXPLORER_VIEW_ID, // 新しい定数を使用
+    bookmarkExplorerProvider
   );
 
   // コマンドの登録

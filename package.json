@@ -19,7 +19,8 @@
     "url": "https://github.com/sponsors/memory-lovers"
   },
   "activationEvents": [
-    "onView:sortable-explorer"
+    "onView:sortable-explorer.fileExplorer",
+    "onView:sortable-explorer.bookmarks"
   ],
   "contributes": {
     "configuration": {
@@ -94,8 +95,13 @@
       "sortable-explorer": [
         {
           "id": "sortable-explorer.fileExplorer",
-          "name": "%view.notepadFiles.name%",
-          "icon": "$(notebook)"
+          "name": "%view.fileExplorer.name%",
+          "icon": "$(list-tree)"
+        },
+        {
+          "id": "sortable-explorer.bookmarks",
+          "name": "%view.bookmarks.name%",
+          "icon": "$(star-full)"
         }
       ]
     },
@@ -164,6 +170,16 @@
         "command": "sortable-explorer.moveFile",
         "title": "%command.moveFile.title%",
         "icon": "$(file-symlink-file)"
+      },
+      {
+        "command": "sortableExplorer.addBookmark",
+        "title": "%command.addBookmark.title%",
+        "icon": "$(star-empty)"
+      },
+      {
+        "command": "sortableExplorer.removeBookmark",
+        "title": "%command.removeBookmark.title%",
+        "icon": "$(star-full)"
       }
     ],
     "keybindings": [],
@@ -240,6 +256,16 @@
           "command": "sortable-explorer.addToExcludePatterns",
           "when": "view == sortable-explorer.fileExplorer",
           "group": "7_modification"
+        },
+        {
+          "command": "sortableExplorer.addBookmark",
+          "when": "(view == sortable-explorer.fileExplorer || view == sortable-explorer.bookmarks) && !(viewItem.contextValue =~ /bookmarked/)",
+          "group": "navigation@1"
+        },
+        {
+          "command": "sortableExplorer.removeBookmark",
+          "when": "(view == sortable-explorer.fileExplorer || view == sortable-explorer.bookmarks) && viewItem.contextValue =~ /bookmarked/",
+          "group": "navigation@1"
         }
       ],
       "commandPalette": [

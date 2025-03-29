@@ -4,6 +4,7 @@ import * as path from "path";
 import * as vscode from "vscode";
 import { FileItem } from "../fileItem";
 import { FileSystemStrategyBase } from "./fileSystemStrategyBase";
+import { BookmarkManager } from "../../bookmark/BookmarkManager"; // BookmarkManagerをインポート
 
 export class FlatFileSystemStrategy extends FileSystemStrategyBase {
   /**
@@ -13,7 +14,8 @@ export class FlatFileSystemStrategy extends FileSystemStrategyBase {
   public async getFiles(
     workspacePath: string,
     includes: string[],
-    excludes: string[]
+    excludes: string[],
+    bookmarkManager?: BookmarkManager // BookmarkManagerをオプション引数として追加
   ): Promise<FileItem[]> {
     // fast-globのパターンを準備: からの場合はすべてを対象とする
     const patterns: string[] = includes.length > 0 ? includes : ["**/*"];
@@ -46,7 +48,10 @@ export class FlatFileSystemStrategy extends FileSystemStrategyBase {
           filePath,
           stats.mtime,
           stats.birthtime,
-          vscode.Uri.file(filePath)
+          vscode.Uri.file(filePath),
+          false, // isDirectory は false
+          undefined, // parent は undefined
+          bookmarkManager // BookmarkManagerを渡す
         )
       );
     }

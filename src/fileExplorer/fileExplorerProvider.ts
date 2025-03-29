@@ -4,6 +4,7 @@ import { FileSystemHelper } from "./fileSystemHelper";
 import { SortingStrategyFactory } from "./sortingStrategy";
 import { ConfigurationManager } from "../configuration/configurationManager";
 import { SortDirection, EXTENSION_NAME, ViewMode } from "../configuration/configurationConstants";
+import { BookmarkManager } from "../bookmark/BookmarkManager"; // BookmarkManagerをインポート
 
 export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
   private _onDidChangeTreeData: vscode.EventEmitter<
@@ -15,7 +16,8 @@ export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
 
   private fileSystemHelper: FileSystemHelper;
 
-  constructor() {
+  // BookmarkManagerを保持
+  constructor(private bookmarkManager: BookmarkManager) {
     this.fileSystemHelper = new FileSystemHelper();
 
     // 設定変更を監視
@@ -30,6 +32,11 @@ export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
     fileSystemWatcher.onDidCreate(() => this.refresh());
     fileSystemWatcher.onDidChange(() => this.refresh());
     fileSystemWatcher.onDidDelete(() => this.refresh());
+
+    // ブックマークの変更を監視
+    this.bookmarkManager.onDidChangeBookmarks(() => {
+        this.refresh();
+    });
   }
 
   refresh(): void {
@@ -37,39 +44,43 @@ export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
   }
 
   getTreeItem(element: FileItem): vscode.TreeItem {
+    // FileItemはコンストラクタでブックマーク状態を考慮して生成されるため、
+    // ここではそのまま返す
     return element;
   }
 
   async getChildren(element?: FileItem): Promise<FileItem[]> {
     // 表示モードを取得
     const viewMode = ConfigurationManager.getViewMode();
-    
+
     // ツリー表示モードで、要素が指定されている場合（ディレクトリの展開）
     if (viewMode === ViewMode.TREE && element && element.isDirectory) {
-      return this.fileSystemHelper.getChildren(
+      // FileSystemHelperにBookmarkManagerを渡してFileItemを生成させる
+      const children = await this.fileSystemHelper.getChildren(
         element.filePath,
         ConfigurationManager.getIncludePatterns(),
-        ConfigurationManager.getExcludePatterns()
-      ).then(children => {
-        // ディレクトリとファイルを分離
-        const directories = children.filter(item => item.isDirectory);
-        const files = children.filter(item => !item.isDirectory);
-        
-        // 設定に基づいてファイルのみを並び替え
-        const sortBy = ConfigurationManager.getSortBy();
-        const ascending = ConfigurationManager.getSortDirection() === SortDirection.ASC;
-        const sortingStrategy = SortingStrategyFactory.createStrategy(
-          sortBy,
-          ascending
-        );
-        
-        const sortedFiles = sortingStrategy.sort(files);
-        
-        // ディレクトリを先に表示し、その後にソートされたファイルを表示
-        return [...directories, ...sortedFiles];
-      });
+        ConfigurationManager.getExcludePatterns(),
+        this.bookmarkManager // BookmarkManagerを渡す
+      );
+
+      // ディレクトリとファイルを分離
+      const directories = children.filter(item => item.isDirectory);
+      const files = children.filter(item => !item.isDirectory);
+
+      // 設定に基づいてファイルのみを並び替え
+      const sortBy = ConfigurationManager.getSortBy();
+      const ascending = ConfigurationManager.getSortDirection() === SortDirection.ASC;
+      const sortingStrategy = SortingStrategyFactory.createStrategy(
+        sortBy,
+        ascending
+      );
+
+      const sortedFiles = sortingStrategy.sort(files);
+
+      // ディレクトリを先に表示し、その後にソートされたファイルを表示
+      return [...directories, ...sortedFiles];
     }
-    
+
     // ルート要素の場合
     if (!element) {
       const workspaceFolders = vscode.workspace.workspaceFolders;
@@ -82,11 +93,12 @@ export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
       for (const folder of workspaceFolders) {
         console.log(`Reading workspace from ${folder.uri.fsPath}`);
 
-        // includeとexcludeの両方を使用する
+        // FileSystemHelperにBookmarkManagerを渡してFileItemを生成させる
         const files = await this.fileSystemHelper.getFiles(
           folder.uri.fsPath,
           ConfigurationManager.getIncludePatterns(),
-          ConfigurationManager.getExcludePatterns()
+          ConfigurationManager.getExcludePatterns(),
+          this.bookmarkManager // BookmarkManagerを渡す
         );
         allFiles = allFiles.concat(files);
       }
@@ -107,14 +119,14 @@ export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
         // ツリーモードではディレクトリとファイルを分離して、ファイルのみ並び替え
         const directories = allFiles.filter(item => item.isDirectory);
         const files = allFiles.filter(item => !item.isDirectory);
-        
+
         const sortedFiles = sortingStrategy.sort(files);
-        
+
         // ディレクトリを先に表示し、その後にソートされたファイルを表示
         return [...directories, ...sortedFiles];
       }
     }
-    
+
     // その他の場合（通常はここには来ない）
     return [];
   }
