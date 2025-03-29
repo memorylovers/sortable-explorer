@@ -68,9 +68,7 @@ export class BookmarkExplorerProvider implements vscode.TreeDataProvider<FileIte
             }
         }
 
-        // ここでソートが必要な場合は追加する (例: 名前順)
-        fileItems.sort((a, b) => a.name.localeCompare(b.name));
-
+        // BookmarkManagerから取得した順序（登録順降順）を維持する
         return fileItems;
     }
 }

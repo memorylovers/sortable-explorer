@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 const BOOKMARK_STORAGE_KEY = 'sortableExplorer.bookmarks';
 
 export class BookmarkManager {
-    private bookmarks: Set<string> = new Set();
+    private bookmarks: string[] = [];
     private readonly _onDidChangeBookmarks = new vscode.EventEmitter<void>();
     public readonly onDidChangeBookmarks: vscode.Event<void> = this._onDidChangeBookmarks.event;
 
@@ -17,22 +17,22 @@ export class BookmarkManager {
     }
 
     /**
-     * Retrieves all bookmarked URIs.
+     * Retrieves all bookmarked URIs in the order they are stored (descending by addition time).
      * @returns An array of bookmarked URIs.
      */
     public getBookmarks(): vscode.Uri[] {
-        return Array.from(this.bookmarks).map(uriString => vscode.Uri.parse(uriString));
+        return this.bookmarks.map(uriString => vscode.Uri.parse(uriString));
     }
 
     /**
-     * Adds a URI to the bookmarks.
+     * Adds a URI to the beginning of the bookmarks list (maintaining descending order by addition time).
      * @param uri The URI to bookmark.
      * @returns A promise that resolves when the bookmark is added and saved.
      */
     public async addBookmark(uri: vscode.Uri): Promise<void> {
         const uriString = uri.toString();
-        if (!this.bookmarks.has(uriString)) {
-            this.bookmarks.add(uriString);
+        if (!this.bookmarks.includes(uriString)) {
+            this.bookmarks.unshift(uriString);
             await this.saveBookmarks();
             this._onDidChangeBookmarks.fire();
         }
@@ -45,8 +45,9 @@ export class BookmarkManager {
      */
     public async removeBookmark(uri: vscode.Uri): Promise<void> {
         const uriString = uri.toString();
-        if (this.bookmarks.has(uriString)) {
-            this.bookmarks.delete(uriString);
+        const initialLength = this.bookmarks.length;
+        this.bookmarks = this.bookmarks.filter(item => item !== uriString);
+        if (this.bookmarks.length < initialLength) {
             await this.saveBookmarks();
             this._onDidChangeBookmarks.fire();
         }
@@ -58,21 +59,20 @@ export class BookmarkManager {
      * @returns True if the URI is bookmarked, false otherwise.
      */
     public isBookmarked(uri: vscode.Uri): boolean {
-        return this.bookmarks.has(uri.toString());
+        return this.bookmarks.includes(uri.toString());
     }
 
     /**
-     * Saves the current bookmarks to workspace state.
+     * Saves the current bookmarks array to workspace state.
      */
     private async saveBookmarks(): Promise<void> {
-        await this.workspaceState.update(BOOKMARK_STORAGE_KEY, Array.from(this.bookmarks));
+        await this.workspaceState.update(BOOKMARK_STORAGE_KEY, this.bookmarks);
     }
 
     /**
-     * Loads bookmarks from workspace state.
+     * Loads bookmarks array from workspace state.
      */
     private loadBookmarks(): void {
-        const storedBookmarks = this.workspaceState.get<string[]>(BOOKMARK_STORAGE_KEY, []);
-        this.bookmarks = new Set(storedBookmarks);
+        this.bookmarks = this.workspaceState.get<string[]>(BOOKMARK_STORAGE_KEY, []);
     }
 }
