@@ -55,13 +55,16 @@
   "renameFile.renamed": "ファイル名を変更しました: {0} から {1}",
   "renameFile.error": "ファイル名の変更に失敗しました",
   "renameFile.noSelection": "名前を変更するファイルが選択されていません。",
-  "moveFile.confirmOverwrite": "移動先に同名のファイルが存在します。上書きしますか？",
-  "moveFile.selectDestinationFolder.title": "移動先フォルダを選択",
-  "moveFile.selectDestinationFolder.buttonLabel": "ここに移動",
+  "moveFile.selectDestinationFolder.placeholder": "移動先のフォルダを選択してください",
+  "moveFile.info.noFolders": "移動先のフォルダがワークスペースに見つかりません。",
+  "moveFile.info.sourceEqualsDestination": "移動元と移動先が同じです。",
+  "moveFile.confirmOverwrite": "ファイル \"{0}\" は \"{1}\" に既に存在します。上書きしますか？",
+  "moveFile.success": "\"{0}\" を \"{1}\" に移動しました。",
   "moveFile.error.noFileSelected": "ファイルが選択されていません。",
   "moveFile.error.cannotMoveFolder": "このコマンドでフォルダを移動することはできません。",
-  "moveFile.error.moveFailed": "ファイルの移動に失敗しました: {0}",
-  "yes": "はい",
-  "no": "いいえ",
-  "cancel": "キャンセル"
+  "moveFile.error.fetchFoldersFailed": "ワークスペースフォルダの取得に失敗しました: {0}",
+  "moveFile.error.moveFailed": "\"{0}\" の \"{1}\" への移動に失敗しました: {2}",
+  "common.yes": "はい",
+  "common.no": "いいえ",
+  "common.cancel": "キャンセル"
 }
