@@ -3,7 +3,6 @@
   "displayName": "%displayName%",
   "description": "%description%",
   "version": "0.2.2",
-  "preview": true,
   "publisher": "memorylovers",
   "icon": "resources/icon.png",
   "categories": [
@@ -19,7 +18,8 @@
     "url": "https://github.com/sponsors/memory-lovers"
   },
   "activationEvents": [
-    "onView:sortable-explorer"
+    "onView:sortable-explorer.fileExplorer",
+    "onView:sortable-explorer.bookmarks"
   ],
   "contributes": {
     "configuration": {
@@ -94,8 +94,13 @@
       "sortable-explorer": [
         {
           "id": "sortable-explorer.fileExplorer",
-          "name": "%view.notepadFiles.name%",
-          "icon": "$(notebook)"
+          "name": "%view.fileExplorer.name%",
+          "icon": "$(list-tree)"
+        },
+        {
+          "id": "sortable-explorer.bookmarks",
+          "name": "%view.bookmarks.name%",
+          "icon": "$(star-full)"
         }
       ]
     },
@@ -164,6 +169,16 @@
         "command": "sortable-explorer.moveFile",
         "title": "%command.moveFile.title%",
         "icon": "$(file-symlink-file)"
+      },
+      {
+        "command": "sortable-explorer.addBookmark",
+        "title": "%command.addBookmark.title%",
+        "icon": "$(star-empty)"
+      },
+      {
+        "command": "sortable-explorer.removeBookmark",
+        "title": "%command.removeBookmark.title%",
+        "icon": "$(star-full)"
       }
     ],
     "keybindings": [],
@@ -240,6 +255,16 @@
           "command": "sortable-explorer.addToExcludePatterns",
           "when": "view == sortable-explorer.fileExplorer",
           "group": "7_modification"
+        },
+        {
+          "command": "sortable-explorer.addBookmark",
+          "when": "(view == sortable-explorer.fileExplorer || view == sortable-explorer.bookmarks) && !(viewItem.contextValue =~ /bookmarked/)",
+          "group": "navigation@1"
+        },
+        {
+          "command": "sortable-explorer.removeBookmark",
+          "when": "view == sortable-explorer.fileExplorer || view == sortable-explorer.bookmarks",
+          "group": "navigation@1"
         }
       ],
       "commandPalette": [

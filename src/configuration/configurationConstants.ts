@@ -3,7 +3,8 @@ export const EXTENSION_NAME = "sortable-explorer";
 
 // ビューとビューコンテナのID
 export const VIEW_CONTAINER_ID = EXTENSION_NAME;
-export const FILE_EXPLORER_ID = `${EXTENSION_NAME}.fileExplorer`;
+export const FILE_EXPLORER_VIEW_ID = `${EXTENSION_NAME}.fileExplorer`; // 定数名を変更
+export const BOOKMARK_EXPLORER_VIEW_ID = `${EXTENSION_NAME}.bookmarks`; // ブックマークビューIDを追加
 
 // コマンドID
 export const COMMANDS = {
@@ -18,6 +19,8 @@ export const COMMANDS = {
   ADD_TO_EXCLUDE_PATTERNS: `${EXTENSION_NAME}.addToExcludePatterns`,
   RENAME_FILE: `${EXTENSION_NAME}.renameFile`,
   MOVE_FILE: `${EXTENSION_NAME}.moveFile`,
+  ADD_BOOKMARK: `${EXTENSION_NAME}.addBookmark`, // ブックマーク追加コマンドID
+  REMOVE_BOOKMARK: `${EXTENSION_NAME}.removeBookmark`, // ブックマーク削除コマンドID
 } as const;
 
 // 設定のプロパティ名（プレフィックスなし）

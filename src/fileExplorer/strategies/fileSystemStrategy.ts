@@ -1,4 +1,5 @@
 import { FileItem } from "../fileItem";
+import { BookmarkManager } from "../../bookmark/BookmarkManager"; // BookmarkManagerをインポート
 
 export interface FileSystemStrategy {
   /**
@@ -7,16 +8,18 @@ export interface FileSystemStrategy {
   getFiles(
     workspacePath: string,
     includes: string[],
-    excludes: string[]
+    excludes: string[],
+    bookmarkManager?: BookmarkManager // BookmarkManagerをオプション引数として追加
   ): Promise<FileItem[]>;
-  
+
   /**
    * 指定されたディレクトリの子要素を取得
    */
   getChildren(
     directoryPath: string,
     includes: string[],
-    excludes: string[]
+    excludes: string[],
+    bookmarkManager?: BookmarkManager // BookmarkManagerをオプション引数として追加
   ): Promise<FileItem[]>;
   
   /**

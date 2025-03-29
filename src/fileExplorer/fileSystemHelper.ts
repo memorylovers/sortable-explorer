@@ -5,6 +5,7 @@ import { ViewMode } from "../configuration/configurationConstants";
 import { FileSystemStrategy } from "./strategies/fileSystemStrategy";
 import { FlatFileSystemStrategy } from "./strategies/flatFileSystemStrategy";
 import { TreeFileSystemStrategy } from "./strategies/treeFileSystemStrategy";
+import { BookmarkManager } from "../bookmark/BookmarkManager"; // BookmarkManagerをインポート
 
 export class FileSystemHelper {
   private strategies: Map<string, FileSystemStrategy>;
@@ -33,21 +34,29 @@ export class FileSystemHelper {
   public async getFiles(
     workspacePath: string,
     includes: string[],
-    excludes: string[]
+    excludes: string[],
+    bookmarkManager?: BookmarkManager // BookmarkManagerをオプションで受け取る
   ): Promise<FileItem[]> {
     // 表示モードを取得して適切な戦略を設定
     const viewMode = ConfigurationManager.getViewMode();
     this.currentStrategy = this.strategies.get(viewMode) || this.currentStrategy;
-    
-    // 選択された戦略を使用してファイルを取得
-    return this.currentStrategy.getFiles(workspacePath, includes, excludes);
+
+    // 選択された戦略を使用してファイルを取得 (BookmarkManagerを渡す)
+    return this.currentStrategy.getFiles(workspacePath, includes, excludes, bookmarkManager);
   }
 
   /**
    * 指定されたディレクトリの子要素を取得
    */
-  public async getChildren(directoryPath: string, includes: string[], excludes: string[]): Promise<FileItem[]> {
-    return this.currentStrategy.getChildren(directoryPath, includes, excludes);
+  public async getChildren(
+    directoryPath: string,
+    includes: string[],
+    excludes: string[],
+    bookmarkManager?: BookmarkManager // BookmarkManagerをオプションで受け取る
+  ): Promise<FileItem[]> {
+    // 選択された戦略を使用して子要素を取得 (BookmarkManagerを渡す)
+    // Tree戦略のみがgetChildrenを実装している想定だが、念のため渡す
+    return this.currentStrategy.getChildren(directoryPath, includes, excludes, bookmarkManager);
   }
 
   /**
