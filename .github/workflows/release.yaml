@@ -6,10 +6,13 @@ on:
       release_type:
         description: "Release type"
         type: choice
+        required: false
         options:
+          - auto
           - patch
           - minor
           - major
+        default: auto
 
 # ジョブに必要な権限を設定
 permissions:
@@ -61,13 +64,17 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
-      - name: Bump Version and Generate CHANGELOG
+      - name: Bump Version and Generate CHANGELOG(auto)
+        if: github.event.inputs.release_type == 'auto'
         run: |
-          if [ -z "${{ github.event.inputs.release_type }}" ]; then
-            pnpm changelogen --release --noAuthors --no-github
-          else
-            pnpm changelogen --release --${{ github.event.inputs.release_type }} --noAuthors --no-github
-          fi
+          pnpm changelogen --release --noAuthors --no-github
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bump Version and Generate CHANGELOG(selected)
+        if: github.event.inputs.release_type != 'auto'
+        run: |
+          pnpm changelogen --release --${{ github.event.inputs.release_type }} --noAuthors --no-github
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
