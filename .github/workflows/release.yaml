@@ -74,7 +74,7 @@ jobs:
       - name: Build & Publish to Visual Studio Marketplace
         run: |
           # generate .vsix
-          pnpm vsce package -p ${{ secrets.VSCE_PAT }}
+          pnpm vsce package
 
           # publish
           pnpm vsce publish -p ${{ secrets.VSCE_PAT }}
