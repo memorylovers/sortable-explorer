@@ -41,22 +41,5 @@ export function toggleSortDirectionCommand(
     vscode.window.showInformationMessage(
       localize("sortDirection.changed", directionName)
     );
-
-    // アイコンを更新
-    updateSortDirectionIcon(newSortDirection);
   };
-}
-
-/**
- * 並び順の方向に応じてアイコンを更新する
- *
- * @param sortDirection 並び順の方向
- */
-export function updateSortDirectionIcon(sortDirection: SortDirectionType) {
-  // コマンドのアイコンを更新
-  vscode.commands.executeCommand(
-    "setContext",
-    CONTEXT_KEYS.SORT_DIRECTION_ICON,
-    sortDirection
-  );
 }
