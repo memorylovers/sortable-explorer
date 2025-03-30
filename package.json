@@ -196,22 +196,22 @@
         },
         {
           "command": "sortable-explorer.toggleSortDirection.desc",
-          "when": "view == sortable-explorer.fileExplorer && (sortable-explorer.sortDirectionIcon == 'desc' || !sortable-explorer.sortDirectionIcon)",
+          "when": "view == sortable-explorer.fileExplorer && config.sortable-explorer.sortDirection == 'desc'",
           "group": "navigation@200"
         },
         {
           "command": "sortable-explorer.toggleSortDirection.asc",
-          "when": "view == sortable-explorer.fileExplorer && sortable-explorer.sortDirectionIcon == 'asc'",
+          "when": "view == sortable-explorer.fileExplorer && config.sortable-explorer.sortDirection == 'asc'",
           "group": "navigation@200"
         },
         {
           "command": "sortable-explorer.toggleViewMode.tree",
-          "when": "view == sortable-explorer.fileExplorer && (sortable-explorer.viewModeIcon == 'tree' || !sortable-explorer.viewModeIcon)",
+          "when": "view == sortable-explorer.fileExplorer && config.sortable-explorer.viewMode == 'tree'",
           "group": "navigation@300"
         },
         {
           "command": "sortable-explorer.toggleViewMode.flat",
-          "when": "view == sortable-explorer.fileExplorer && sortable-explorer.viewModeIcon == 'flat'",
+          "when": "view == sortable-explorer.fileExplorer && config.sortable-explorer.viewMode == 'flat'",
           "group": "navigation@300"
         },
         {

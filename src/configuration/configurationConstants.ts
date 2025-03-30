@@ -63,7 +63,4 @@ export const DefaultPatterns = {
 } as const;
 
 // コンテキストキー
-export const CONTEXT_KEYS = {
-  SORT_DIRECTION_ICON: `${EXTENSION_NAME}.sortDirectionIcon`,
-  VIEW_MODE_ICON: `${EXTENSION_NAME}.viewModeIcon`,
-} as const;
+export const CONTEXT_KEYS = {} as const;

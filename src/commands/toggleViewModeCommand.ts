@@ -39,22 +39,5 @@ export function toggleViewModeCommand(
     vscode.window.showInformationMessage(
       localize("viewMode.changed", modeName)
     );
-
-    // アイコンを更新
-    updateViewModeIcon(newViewMode);
   };
-}
-
-/**
- * 表示モードに応じてアイコンを更新する
- *
- * @param viewMode 表示モード
- */
-export function updateViewModeIcon(viewMode: ViewModeType) {
-  // コマンドのアイコンを更新
-  vscode.commands.executeCommand(
-    "setContext",
-    CONTEXT_KEYS.VIEW_MODE_ICON,
-    viewMode
-  );
 }

@@ -16,14 +16,8 @@ import { openSettingsCommand } from "./commands/openSettingsCommand";
 import { refreshFileExplorerCommand } from "./commands/refreshFileExplorerCommand";
 import { renameFileCommand } from "./commands/renameFileCommand";
 import { selectSortByCommand } from "./commands/selectSortByCommand";
-import {
-  toggleSortDirectionCommand,
-  updateSortDirectionIcon,
-} from "./commands/toggleSortDirectionCommand";
-import {
-  toggleViewModeCommand,
-  updateViewModeIcon,
-} from "./commands/toggleViewModeCommand";
+import { toggleSortDirectionCommand } from "./commands/toggleSortDirectionCommand";
+import { toggleViewModeCommand } from "./commands/toggleViewModeCommand";
 import {
   COMMANDS,
   EXTENSION_NAME,
@@ -53,14 +47,6 @@ export function activate(context: vscode.ExtensionContext) {
 
   // BookmarkExplorerProviderのインスタンスを作成 (BookmarkManagerを渡す)
   const bookmarkExplorerProvider = new BookmarkExplorerProvider(bookmarkManager);
-
-  // 初期状態の並び順の方向に応じてアイコンを設定
-  const initialSortDirection = ConfigurationManager.getSortDirection();
-  updateSortDirectionIcon(initialSortDirection);
-
-  // 初期状態の表示モードに応じてアイコンを設定
-  const initialViewMode = ConfigurationManager.getViewMode();
-  updateViewModeIcon(initialViewMode);
 
   // 既存のファイルエクスプローラービューの登録
   vscode.window.registerTreeDataProvider(
