@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.2.4
+
+[compare changes](https://github.com/memorylovers/sortable-explorer/compare/v0.2.3...v0.2.4)
+
+### 🚀 Enhancements
+
+- **copyFileCommand:** YYYYMMDDプレフィックスの日付置換と重複回避ロジックを実装 ([#13](https://github.com/memorylovers/sortable-explorer/pull/13))
+
+### 💅 Refactors
+
+- Abolish custom context keys ([#11](https://github.com/memorylovers/sortable-explorer/pull/11))
+
+### 🏡 Chore
+
+- Add dev container configuration and update .gitignore for pnpm store ([8be22ab](https://github.com/memorylovers/sortable-explorer/commit/8be22ab))
+
 ## v0.2.3
 
 [compare changes](https://github.com/memorylovers/sortable-explorer/compare/v0.2.2...v0.2.3)
