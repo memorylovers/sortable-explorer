@@ -5,6 +5,7 @@ import * as vscode from "vscode";
 import { FileItem } from "../fileItem";
 import { FileSystemStrategyBase } from "./fileSystemStrategyBase";
 import { BookmarkManager } from "../../bookmark/BookmarkManager"; // BookmarkManagerをインポート
+import { ViewMode, ViewModeType } from "../../configuration/configurationConstants"; // ViewModeとViewModeTypeをインポート
 
 export class FlatFileSystemStrategy extends FileSystemStrategyBase {
   /**
@@ -15,6 +16,7 @@ export class FlatFileSystemStrategy extends FileSystemStrategyBase {
     workspacePath: string,
     includes: string[],
     excludes: string[],
+    viewMode: ViewModeType, // ViewModeTypeに変更
     bookmarkManager?: BookmarkManager // BookmarkManagerをオプション引数として追加
   ): Promise<FileItem[]> {
     // fast-globのパターンを準備: からの場合はすべてを対象とする
@@ -51,7 +53,8 @@ export class FlatFileSystemStrategy extends FileSystemStrategyBase {
           vscode.Uri.file(filePath),
           false, // isDirectory は false
           undefined, // parent は undefined
-          bookmarkManager // BookmarkManagerを渡す
+          bookmarkManager, // BookmarkManagerを渡す
+          viewMode // ViewModeを渡す
         )
       );
     }

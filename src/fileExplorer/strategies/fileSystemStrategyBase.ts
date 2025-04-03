@@ -5,6 +5,8 @@ import * as path from "path";
 import * as vscode from "vscode";
 import { FileItem } from "../fileItem";
 import { FileSystemStrategy } from "./fileSystemStrategy";
+import { ViewMode, ViewModeType } from "../../configuration/configurationConstants"; // ViewModeとViewModeTypeをインポート
+import { BookmarkManager } from "../../bookmark/BookmarkManager"; // BookmarkManagerをインポート
 
 export abstract class FileSystemStrategyBase implements FileSystemStrategy {
   /**
@@ -14,7 +16,9 @@ export abstract class FileSystemStrategyBase implements FileSystemStrategy {
   abstract getFiles(
     workspacePath: string,
     includes: string[],
-    excludes: string[]
+    excludes: string[],
+    viewMode: ViewModeType, // ViewModeTypeに変更
+    bookmarkManager?: BookmarkManager // BookmarkManagerを追加
   ): Promise<FileItem[]>;
 
   /**
@@ -23,7 +27,9 @@ export abstract class FileSystemStrategyBase implements FileSystemStrategy {
   public async getChildren(
     directoryPath: string,
     includes: string[],
-    excludes: string[]
+    excludes: string[],
+    viewMode: ViewModeType, // ViewModeTypeに変更
+    bookmarkManager?: BookmarkManager // BookmarkManagerを追加
   ): Promise<FileItem[]> {
     try {
       const result: FileItem[] = [];
@@ -54,7 +60,10 @@ export abstract class FileSystemStrategyBase implements FileSystemStrategy {
               stats.mtime,
               stats.birthtime,
               vscode.Uri.file(dirPath),
-              true // isDirectory = true
+              true, // isDirectory = true
+              undefined, // parent は undefined
+              bookmarkManager, // BookmarkManagerを渡す
+              viewMode // viewModeを渡す
             )
           );
         } catch (error) {
@@ -91,7 +100,10 @@ export abstract class FileSystemStrategyBase implements FileSystemStrategy {
               stats.mtime,
               stats.birthtime,
               vscode.Uri.file(filePath),
-              false // isDirectory = false
+              false, // isDirectory = false
+              undefined, // parent は undefined
+              bookmarkManager, // BookmarkManagerを渡す
+              viewMode // viewModeを渡す
             )
           );
         } catch (error) {
@@ -125,7 +137,7 @@ export abstract class FileSystemStrategyBase implements FileSystemStrategy {
     const baseFileName = `${dateStr}_${title}`;
     let fileName = `${baseFileName}.md`;
     let filePath = path.join(targetDirectory, fileName);
-    
+
     // ファイルが存在するかチェックし、存在する場合は連番を付ける
     let counter = 1;
     while (true) {

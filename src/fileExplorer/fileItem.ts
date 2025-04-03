@@ -1,7 +1,7 @@
-import * as vscode from "vscode";
 import * as path from "path";
-import * as fs from "fs";
+import * as vscode from "vscode";
 import { BookmarkManager } from "../bookmark/BookmarkManager"; // BookmarkManagerをインポート
+import { ViewMode, ViewModeType } from "../configuration/configurationConstants"; // ViewModeとViewModeTypeをインポート
 
 export class FileItem extends vscode.TreeItem {
   public isBookmarked: boolean = false; // ブックマーク状態を保持
@@ -14,7 +14,8 @@ export class FileItem extends vscode.TreeItem {
     public readonly resourceUri: vscode.Uri,
     public readonly isDirectory: boolean = false,
     public readonly parent?: FileItem,
-    bookmarkManager?: BookmarkManager // BookmarkManagerを受け取る (オプション)
+    bookmarkManager?: BookmarkManager, // BookmarkManagerを受け取る (オプション)
+    viewMode?: ViewModeType // ViewModeTypeに変更
   ) {
     super(
       resourceUri,
@@ -36,8 +37,13 @@ export class FileItem extends vscode.TreeItem {
       this.contextValue = "fileItem"; // ブックマークされていない場合
     }
 
-    if (!isDirectory) {
+    // descriptionはFlatモードのファイルのみに設定
+    if (!isDirectory && viewMode === ViewMode.FLAT) {
       this.description = this.getRelativeFolderPath();
+    }
+
+    // commandはファイルの場合に設定 (ViewModeによらず)
+    if (!isDirectory) {
       this.command = {
         command: "vscode.open",
         title: "Open File",

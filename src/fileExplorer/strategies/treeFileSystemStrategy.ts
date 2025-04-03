@@ -5,6 +5,7 @@ import * as vscode from "vscode";
 import { FileItem } from "../fileItem";
 import { FileSystemStrategyBase } from "./fileSystemStrategyBase";
 import { BookmarkManager } from "../../bookmark/BookmarkManager"; // BookmarkManagerをインポート
+import { ViewMode, ViewModeType } from "../../configuration/configurationConstants"; // ViewModeとViewModeTypeをインポート
 
 export class TreeFileSystemStrategy extends FileSystemStrategyBase {
   /**
@@ -15,9 +16,11 @@ export class TreeFileSystemStrategy extends FileSystemStrategyBase {
     workspacePath: string,
     includes: string[],
     excludes: string[],
+    viewMode: ViewModeType, // ViewModeTypeに変更
     bookmarkManager?: BookmarkManager // BookmarkManagerをオプション引数として追加
   ): Promise<FileItem[]> {
-    return this.readDirectory(workspacePath, includes, excludes, bookmarkManager);
+    // readDirectoryにviewModeを渡す
+    return this.readDirectory(workspacePath, includes, excludes, viewMode, bookmarkManager);
   }
 
   /**
@@ -27,10 +30,12 @@ export class TreeFileSystemStrategy extends FileSystemStrategyBase {
     directoryPath: string,
     includes: string[],
     excludes: string[],
+    viewMode: ViewModeType, // ViewModeTypeに変更
     bookmarkManager?: BookmarkManager // BookmarkManagerをオプション引数として追加
   ): Promise<FileItem[]> {
     // getFilesと同じロジックでディレクトリを読む
-    return this.readDirectory(directoryPath, includes, excludes, bookmarkManager);
+    // readDirectoryにviewModeを渡す
+    return this.readDirectory(directoryPath, includes, excludes, viewMode, bookmarkManager);
   }
 
   /**
@@ -40,6 +45,7 @@ export class TreeFileSystemStrategy extends FileSystemStrategyBase {
     directoryPath: string,
     includes: string[],
     excludes: string[],
+    viewMode: ViewModeType, // ViewModeTypeに変更
     bookmarkManager?: BookmarkManager
   ): Promise<FileItem[]> {
     try {
@@ -70,7 +76,8 @@ export class TreeFileSystemStrategy extends FileSystemStrategyBase {
               vscode.Uri.file(dirPath),
               true, // isDirectory = true
               undefined, // parent は undefined (ルートレベルまたはgetChildrenの直接の子)
-              bookmarkManager // BookmarkManagerを渡す
+              bookmarkManager, // BookmarkManagerを渡す
+              viewMode // ViewModeを渡す
             )
           );
         } catch (error) {
@@ -105,7 +112,8 @@ export class TreeFileSystemStrategy extends FileSystemStrategyBase {
               vscode.Uri.file(filePath),
               false, // isDirectory = false
               undefined, // parent は undefined (ルートレベルまたはgetChildrenの直接の子)
-              bookmarkManager // BookmarkManagerを渡す
+              bookmarkManager, // BookmarkManagerを渡す
+              viewMode // ViewModeを渡す
             )
           );
         } catch (error) {
