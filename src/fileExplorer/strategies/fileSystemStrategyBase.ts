@@ -125,7 +125,7 @@ export abstract class FileSystemStrategyBase implements FileSystemStrategy {
     const baseFileName = `${dateStr}_${title}`;
     let fileName = `${baseFileName}.md`;
     let filePath = path.join(targetDirectory, fileName);
-    
+
     // ファイルが存在するかチェックし、存在する場合は連番を付ける
     let counter = 1;
     while (true) {
