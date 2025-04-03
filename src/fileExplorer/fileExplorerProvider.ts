@@ -1,10 +1,14 @@
 import * as vscode from "vscode";
+import { BookmarkManager } from "../bookmark/BookmarkManager"; // BookmarkManagerをインポート
+import {
+  EXTENSION_NAME,
+  SortDirection,
+  ViewMode,
+} from "../configuration/configurationConstants";
+import { ConfigurationManager } from "../configuration/configurationManager";
 import { FileItem } from "./fileItem";
 import { FileSystemHelper } from "./fileSystemHelper";
 import { SortingStrategyFactory } from "./sortingStrategy";
-import { ConfigurationManager } from "../configuration/configurationManager";
-import { SortDirection, EXTENSION_NAME, ViewMode } from "../configuration/configurationConstants";
-import { BookmarkManager } from "../bookmark/BookmarkManager"; // BookmarkManagerをインポート
 
 export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
   private _onDidChangeTreeData: vscode.EventEmitter<
@@ -35,7 +39,7 @@ export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
 
     // ブックマークの変更を監視
     this.bookmarkManager.onDidChangeBookmarks(() => {
-        this.refresh();
+      this.refresh();
     });
   }
 
@@ -44,8 +48,13 @@ export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
   }
 
   getTreeItem(element: FileItem): vscode.TreeItem {
-    // FileItemはコンストラクタでブックマーク状態を考慮して生成されるため、
-    // ここではそのまま返す
+    // 表示モードを取得
+    const viewMode = ConfigurationManager.getViewMode();
+
+    // treeモードの場合は、descriptionを表示しない
+    if (viewMode === "tree") {
+      element.description = undefined;
+    }
     return element;
   }
 
@@ -64,12 +73,13 @@ export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
       );
 
       // ディレクトリとファイルを分離
-      const directories = children.filter(item => item.isDirectory);
-      const files = children.filter(item => !item.isDirectory);
+      const directories = children.filter((item) => item.isDirectory);
+      const files = children.filter((item) => !item.isDirectory);
 
       // 設定に基づいてファイルのみを並び替え
       const sortBy = ConfigurationManager.getSortBy();
-      const ascending = ConfigurationManager.getSortDirection() === SortDirection.ASC;
+      const ascending =
+        ConfigurationManager.getSortDirection() === SortDirection.ASC;
       const sortingStrategy = SortingStrategyFactory.createStrategy(
         sortBy,
         ascending
@@ -106,7 +116,8 @@ export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
       // 表示モードに応じて並び替え方法を変更
       const viewMode = ConfigurationManager.getViewMode();
       const sortBy = ConfigurationManager.getSortBy();
-      const ascending = ConfigurationManager.getSortDirection() === SortDirection.ASC;
+      const ascending =
+        ConfigurationManager.getSortDirection() === SortDirection.ASC;
       const sortingStrategy = SortingStrategyFactory.createStrategy(
         sortBy,
         ascending
@@ -117,8 +128,8 @@ export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
         return sortingStrategy.sort(allFiles);
       } else {
         // ツリーモードではディレクトリとファイルを分離して、ファイルのみ並び替え
-        const directories = allFiles.filter(item => item.isDirectory);
-        const files = allFiles.filter(item => !item.isDirectory);
+        const directories = allFiles.filter((item) => item.isDirectory);
+        const files = allFiles.filter((item) => !item.isDirectory);
 
         const sortedFiles = sortingStrategy.sort(files);
 
