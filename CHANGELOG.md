@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.2.5
+
+[compare changes](https://github.com/memorylovers/sortable-explorer/compare/v0.2.4...v0.2.5)
+
+### 💅 Refactors
+
+- **fileExplorer, bookmark:** Disable description in tree mode and bookmark view ([#15](https://github.com/memorylovers/sortable-explorer/pull/15))
+
+### 🏡 Chore
+
+- Add .roo/ to .gitignore ([d1766bf](https://github.com/memorylovers/sortable-explorer/commit/d1766bf))
+- Add missing newline at end of file in fileSystemStrategyBase.ts and flatFileSystemStrategy.ts ([42c1d99](https://github.com/memorylovers/sortable-explorer/commit/42c1d99))
+
 ## v0.2.4
 
 [compare changes](https://github.com/memorylovers/sortable-explorer/compare/v0.2.3...v0.2.4)

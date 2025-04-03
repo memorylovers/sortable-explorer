@@ -2,7 +2,7 @@
   "name": "sortable-explorer",
   "displayName": "%displayName%",
   "description": "%description%",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "publisher": "memorylovers",
   "icon": "resources/icon.png",
   "categories": [
