@@ -17,10 +17,6 @@
   "sponsor": {
     "url": "https://github.com/sponsors/memory-lovers"
   },
-  "activationEvents": [
-    "onView:sortable-explorer.fileExplorer",
-    "onView:sortable-explorer.bookmarks"
-  ],
   "contributes": {
     "configuration": {
       "title": "%configuration.title%",
