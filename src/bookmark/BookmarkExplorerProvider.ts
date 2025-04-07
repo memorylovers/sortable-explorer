@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
-import { FileItem } from "../fileExplorer/fileItem";
+import { FileItem } from "../explorer/fileItem";
 import { BookmarkManager } from "./BookmarkManager";
 
 export class BookmarkExplorerProvider
