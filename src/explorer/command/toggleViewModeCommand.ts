@@ -1,12 +1,8 @@
 import * as vscode from "vscode";
-import {
-  CONTEXT_KEYS,
-  ViewMode,
-  ViewModeType,
-} from "../configuration/configurationConstants";
-import { ConfigurationManager } from "../configuration/configurationManager";
-import { FileExplorerProvider } from "../fileExplorer/fileExplorerProvider";
-import { localize } from "../localization/localization";
+import { ViewMode } from "../../configuration/configurationConstants";
+import { ConfigurationManager } from "../../configuration/configurationManager";
+import { SortableExplorerProvider } from "../SortableExplorerProvider";
+import { localize } from "../../localization/localization";
 
 /**
  * 表示モード（フラット表示/ツリー表示）を切り替えるコマンド
@@ -15,7 +11,7 @@ import { localize } from "../localization/localization";
  * @returns コマンド実行関数
  */
 export function toggleViewModeCommand(
-  fileExplorerProvider: FileExplorerProvider
+  fileExplorerProvider: SortableExplorerProvider
 ) {
   return async () => {
     // 現在の表示モードを取得

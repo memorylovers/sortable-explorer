@@ -1,4 +1,4 @@
-import { FileItem } from "../fileItem";
+import { FileItem } from "../FileItem";
 import { BookmarkManager } from "../../bookmark/BookmarkManager"; // BookmarkManagerをインポート
 
 export interface FileSystemStrategy {

@@ -1,9 +1,8 @@
-import * as vscode from "vscode";
-import { FileExplorerProvider } from "../fileExplorer/fileExplorerProvider";
+import { SortableExplorerProvider } from "../SortableExplorerProvider";
 
 // ファイルエクスプローラー更新コマンド
 export function refreshFileExplorerCommand(
-  fileExplorerProvider: FileExplorerProvider
+  fileExplorerProvider: SortableExplorerProvider
 ) {
   return () => {
     fileExplorerProvider.refresh();

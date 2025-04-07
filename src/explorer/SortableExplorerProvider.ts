@@ -6,11 +6,13 @@ import {
   ViewMode,
 } from "../configuration/configurationConstants";
 import { ConfigurationManager } from "../configuration/configurationManager";
-import { FileItem } from "./fileItem";
-import { FileSystemHelper } from "./fileSystemHelper";
+import { FileItem } from "./FileItem";
+import { FileSystemHelper } from "./FileSystemHelper";
 import { SortingStrategyFactory } from "./sortingStrategy";
 
-export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem> {
+export class SortableExplorerProvider
+  implements vscode.TreeDataProvider<FileItem>
+{
   private _onDidChangeTreeData: vscode.EventEmitter<
     FileItem | undefined | null | void
   > = new vscode.EventEmitter<FileItem | undefined | null | void>();
