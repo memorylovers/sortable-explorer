@@ -1,13 +1,14 @@
 import * as path from "path";
 import * as vscode from "vscode";
-import { FileExplorerProvider } from "../fileExplorer/fileExplorerProvider";
-import { FileItem } from "../fileExplorer/fileItem";
-import { FileSystemHelper } from "../fileExplorer/fileSystemHelper";
-import { localize } from "../localization/localization";
+
+import { FileItem } from "../FileItem";
+import { FileSystemHelper } from "../FileSystemHelper";
+import { SortableExplorerProvider } from "../SortableExplorerProvider";
+import { localize } from "../../localization/localization";
 
 // 新規ノート作成コマンド
 export function createNewNoteCommand(
-  fileExplorerProvider: FileExplorerProvider,
+  fileExplorerProvider: SortableExplorerProvider,
   fileSystemHelper: FileSystemHelper
 ) {
   return async (fileItem?: FileItem) => {
@@ -15,14 +16,14 @@ export function createNewNoteCommand(
       // ワークスペースフォルダの確認
       const workspaceFolders = vscode.workspace.workspaceFolders;
       if (!workspaceFolders) {
-        vscode.window.showErrorMessage(localize('newNote.noWorkspace'));
+        vscode.window.showErrorMessage(localize("newNote.noWorkspace"));
         return;
       }
 
       // タイトル入力ダイアログを表示
       const title = await vscode.window.showInputBox({
-        prompt: localize('newNote.placeholder'),
-        placeHolder: localize('command.createNewNote.title'),
+        prompt: localize("newNote.placeholder"),
+        placeHolder: localize("command.createNewNote.title"),
       });
 
       // キャンセルされた場合
@@ -32,7 +33,7 @@ export function createNewNoteCommand(
 
       // タイトルが空の場合
       if (title.trim() === "") {
-        vscode.window.showErrorMessage(localize('newNote.emptyTitle'));
+        vscode.window.showErrorMessage(localize("newNote.emptyTitle"));
         return;
       }
 
@@ -50,7 +51,8 @@ export function createNewNoteCommand(
         }
       } else if (vscode.window.activeTextEditor) {
         // アクティブなエディタがある場合、そのファイルと同じフォルダに作成
-        const activeFilePath = vscode.window.activeTextEditor.document.uri.fsPath;
+        const activeFilePath =
+          vscode.window.activeTextEditor.document.uri.fsPath;
         targetDirectory = path.dirname(activeFilePath);
       } else {
         // それ以外の場合は最初のワークスペースフォルダを使用
@@ -70,14 +72,11 @@ export function createNewNoteCommand(
       // ファイルエクスプローラーを更新
       fileExplorerProvider.refresh();
 
-      vscode.window.showInformationMessage(
-        localize('newNote.created', title)
-      );
+      vscode.window.showInformationMessage(localize("newNote.created", title));
     } catch (error) {
       vscode.window.showErrorMessage(
-        localize('newNote.error') + `: ${
-          error instanceof Error ? error.message : String(error)
-        }`
+        localize("newNote.error") +
+          `: ${error instanceof Error ? error.message : String(error)}`
       );
     }
   };

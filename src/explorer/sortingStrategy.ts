@@ -1,5 +1,5 @@
 import { SortBy, SortByType } from "../configuration/configurationConstants";
-import { FileItem } from "./fileItem";
+import { FileItem } from "./FileItem";
 
 export interface SortingStrategy {
   sort(files: FileItem[]): FileItem[];

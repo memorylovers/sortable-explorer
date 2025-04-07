@@ -1,27 +1,25 @@
 import * as path from "path";
 import * as vscode from "vscode";
 import * as fs from "fs";
-import { FileExplorerProvider } from "../fileExplorer/fileExplorerProvider";
-import { localize } from "../localization/localization";
+import { localize } from "../../localization/localization";
+import { SortableExplorerProvider } from "../SortableExplorerProvider";
 
 // Helper function to get today's date in YYYYMMDD format
 function getTodayYYYYMMDD(): string {
   const today = new Date();
   const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
   return `${year}${month}${day}`;
 }
 // ファイルコピーコマンド
 export function copyFileCommand(
-  fileExplorerProvider: FileExplorerProvider
+  fileExplorerProvider: SortableExplorerProvider
 ) {
   return async (fileItem: any) => {
     try {
       if (!fileItem || !fileItem.resourceUri) {
-        vscode.window.showErrorMessage(
-          localize('copyFile.noSelection')
-        );
+        vscode.window.showErrorMessage(localize("copyFile.noSelection"));
         return;
       }
 
@@ -34,7 +32,7 @@ export function copyFileCommand(
       const sourceFilePath = sourceUri.fsPath;
       const sourceFileName = path.basename(sourceFilePath);
       const sourceDir = path.dirname(sourceFilePath);
-      
+
       // 新しいファイル名を生成（例: file.txt -> file - Copy.txt）
       const fileExt = path.extname(sourceFileName);
       const fileNameWithoutExt = path.basename(sourceFileName, fileExt);
@@ -71,12 +69,12 @@ export function copyFileCommand(
           targetFilePath = path.join(sourceDir, targetFileName);
         }
       }
-      
+
       const targetUri = vscode.Uri.file(targetFilePath);
 
       // ファイルの内容を読み込む
       const fileData = await vscode.workspace.fs.readFile(sourceUri);
-      
+
       // 新しいファイルに書き込む
       await vscode.workspace.fs.writeFile(targetUri, fileData);
 
@@ -84,13 +82,12 @@ export function copyFileCommand(
       fileExplorerProvider.refresh();
 
       vscode.window.showInformationMessage(
-        localize('copyFile.copied', sourceFileName, targetFileName) // Use the final target file name
+        localize("copyFile.copied", sourceFileName, targetFileName) // Use the final target file name
       );
     } catch (error) {
       vscode.window.showErrorMessage(
-        localize('copyFile.error') + `: ${
-          error instanceof Error ? error.message : String(error)
-        }`
+        localize("copyFile.error") +
+          `: ${error instanceof Error ? error.message : String(error)}`
       );
     }
   };

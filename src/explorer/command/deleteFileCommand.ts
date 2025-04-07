@@ -1,30 +1,28 @@
 import * as path from "path";
 import * as vscode from "vscode";
-import { FileExplorerProvider } from "../fileExplorer/fileExplorerProvider";
-import { localize } from "../localization/localization";
+import { localize } from "../../localization/localization";
+import { SortableExplorerProvider } from "../SortableExplorerProvider";
 
 // ファイル削除コマンド
 export function deleteFileCommand(
-  fileExplorerProvider: FileExplorerProvider
+  fileExplorerProvider: SortableExplorerProvider
 ) {
   return async (fileItem: any) => {
     try {
       if (!fileItem || !fileItem.resourceUri) {
-        vscode.window.showErrorMessage(
-          localize('deleteFile.noSelection')
-        );
+        vscode.window.showErrorMessage(localize("deleteFile.noSelection"));
         return;
       }
 
       // 確認ダイアログを表示
       const fileName = path.basename(fileItem.resourceUri.fsPath);
       const result = await vscode.window.showWarningMessage(
-        localize('deleteFile.confirm', fileName),
+        localize("deleteFile.confirm", fileName),
         { modal: true },
-        localize('deleteFile.button')
+        localize("deleteFile.button")
       );
 
-      if (result !== localize('deleteFile.button')) {
+      if (result !== localize("deleteFile.button")) {
         return;
       }
 
@@ -36,12 +34,13 @@ export function deleteFileCommand(
       // ファイルエクスプローラーを更新
       fileExplorerProvider.refresh();
 
-      vscode.window.showInformationMessage(localize('deleteFile.deleted', fileName));
+      vscode.window.showInformationMessage(
+        localize("deleteFile.deleted", fileName)
+      );
     } catch (error) {
       vscode.window.showErrorMessage(
-        localize('deleteFile.error') + `: ${
-          error instanceof Error ? error.message : String(error)
-        }`
+        localize("deleteFile.error") +
+          `: ${error instanceof Error ? error.message : String(error)}`
       );
     }
   };

@@ -3,10 +3,10 @@ import {
   CONTEXT_KEYS,
   SortDirection,
   SortDirectionType,
-} from "../configuration/configurationConstants";
-import { ConfigurationManager } from "../configuration/configurationManager";
-import { FileExplorerProvider } from "../fileExplorer/fileExplorerProvider";
-import { localize } from "../localization/localization";
+} from "../../configuration/configurationConstants";
+import { ConfigurationManager } from "../../configuration/configurationManager";
+import { localize } from "../../localization/localization";
+import { SortableExplorerProvider } from "../SortableExplorerProvider";
 
 /**
  * 並び順の方向（昇順/降順）を切り替えるコマンド
@@ -15,7 +15,7 @@ import { localize } from "../localization/localization";
  * @returns コマンド実行関数
  */
 export function toggleSortDirectionCommand(
-  fileExplorerProvider: FileExplorerProvider
+  fileExplorerProvider: SortableExplorerProvider
 ) {
   return async () => {
     // 現在の並び順の方向を取得

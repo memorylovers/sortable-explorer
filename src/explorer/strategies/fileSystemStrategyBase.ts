@@ -3,7 +3,7 @@ import * as fs from "fs";
 import * as micromatch from "micromatch";
 import * as path from "path";
 import * as vscode from "vscode";
-import { FileItem } from "../fileItem";
+import { FileItem } from "../FileItem";
 import { FileSystemStrategy } from "./fileSystemStrategy";
 
 export abstract class FileSystemStrategyBase implements FileSystemStrategy {

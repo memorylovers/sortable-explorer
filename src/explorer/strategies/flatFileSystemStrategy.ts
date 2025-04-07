@@ -2,7 +2,7 @@ import * as fg from "fast-glob";
 import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
-import { FileItem } from "../fileItem";
+import { FileItem } from "../FileItem";
 import { FileSystemStrategyBase } from "./fileSystemStrategyBase";
 import { BookmarkManager } from "../../bookmark/BookmarkManager"; // BookmarkManagerをインポート
 
